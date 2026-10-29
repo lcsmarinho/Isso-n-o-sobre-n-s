@@ -1,0 +1,6 @@
+{
+  "name": "Isso Não É Só Sobre Nós",
+  "description": "Jogo de cartas imersivo e intimista para casais com física 3D de baralho, categorias profundas e microinterações táteis.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
