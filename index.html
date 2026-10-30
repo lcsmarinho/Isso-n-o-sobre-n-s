@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Isso Não É Só Sobre Nós | Jogo de Cartas para Casais</title>
-  <meta name="description" content="Um jogo de cartas imersivo, intimista e profundo para casais se conectarem com física fluida de baralho e categorias especiais.">
-  <meta property="og:title" content="Isso Não É Só Sobre Nós | Jogo de Cartas para Casais">
-  <meta property="og:description" content="Uma releitura intimista e romântica com baralho dinâmico e perguntas profundas.">
-  <meta name="theme-color" content="#0d0d11">
+  <title>Isso Não É Só Sobre Nós | Jogos para Casais</title>
+  <meta name="description" content="Dois jogos imersivos e românticos para casais: baralho de conexão profunda e Verdade, Consequência & Memórias com desafios e modo picante.">
+  <meta property="og:title" content="Isso Não É Só Sobre Nós | Jogos para Casais">
+  <meta property="og:description" content="Momentos a Dois: Conexão profunda, nostalgia, dilemas e prendas para casais.">
+  <meta name="theme-color" content="#0a0a0e">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
@@ -28,9 +28,9 @@
     }
 
     :root {
-      --bg-deep: #0d0d11;
-      --bg-surface: #14141a;
-      --bg-surface-elevated: #1b1b24;
+      --bg-deep: #0a0a0e;
+      --bg-surface: #121217;
+      --bg-surface-elevated: #1a1a22;
       --border-subtle: rgba(255, 255, 255, 0.08);
       --border-highlight: rgba(255, 255, 255, 0.16);
       
@@ -40,6 +40,8 @@
       --color-ocean: #2E6F89;
       --color-crimson: #B84A6F;
       --color-ruby: #8E1629;
+      --color-fire: #FF4D4D;
+      --color-indigo: #5C67DE;
 
       --active-accent: #D4A359;
       --active-glow: rgba(212, 163, 89, 0.22);
@@ -52,7 +54,6 @@
       --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       --font-ui: 'Outfit', sans-serif;
 
-      --card-radius: 22px;
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
@@ -61,7 +62,7 @@
       width: 100%;
       height: 100%;
       height: 100dvh;
-      overflow: hidden; /* ZERO rolagem de página no app */
+      overflow: hidden; /* ZERO rolagem de tela no app inteiro */
       background-color: var(--bg-deep);
       color: var(--text-primary);
       font-family: var(--font-body);
@@ -83,9 +84,9 @@
       transform: translate(-50%, -50%);
       width: min(90vw, 640px);
       height: min(90vw, 640px);
-      background: radial-gradient(circle, var(--active-glow) 0%, rgba(13, 13, 17, 0) 70%);
+      background: radial-gradient(circle, var(--active-glow) 0%, rgba(10, 10, 14, 0) 70%);
       opacity: 0.75;
-      filter: blur(75px);
+      filter: blur(80px);
       pointer-events: none;
       z-index: 0;
       transition: background 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -101,7 +102,7 @@
       z-index: 1;
     }
 
-    /* Main Container: sempre cabe 100% na tela sem rolar */
+    /* Main Container: 100% viewport fit */
     #app-container {
       position: relative;
       z-index: 2;
@@ -123,22 +124,28 @@
       display: none;
       flex-direction: column;
       overflow: hidden;
+      animation: fadeInView 0.28s ease;
     }
 
     .view-screen.active {
       display: flex;
     }
 
+    @keyframes fadeInView {
+      from { opacity: 0; transform: scale(0.99); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
     /* ==========================================================================
-       1. MENU INICIAL (HOME VIEW) - ZERO ROLAGEM, CABE TUDO PERFEITO
+       TELA 1: HUB DE JOGOS PRINCIPAL (MOMENTOS A DOIS)
        ========================================================================== */
-    #view-home {
+    #view-hub {
       padding: calc(var(--safe-top) + 12px) 20px calc(var(--safe-bottom) + 14px) 20px;
       justify-content: space-between;
       overflow: hidden;
     }
 
-    .home-header {
+    .hub-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -148,213 +155,682 @@
       flex-shrink: 0;
     }
 
-    .home-brand-tag {
-      font-family: var(--font-ui);
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+    .hub-header-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hub-brand-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(212, 163, 89, 0.2), rgba(184, 74, 111, 0.3));
+      border: 1px solid rgba(212, 163, 89, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: var(--color-gold);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .hub-brand-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.15rem, 2.8vw, 1.35rem);
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+
+    .hub-brand-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .hub-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 840px;
+      margin: 0 auto;
+      gap: clamp(12px, 2.5vh, 22px);
+      padding: 6px 0;
+      min-height: 0;
+    }
+
+    .hub-hero-text {
+      text-align: center;
+      max-width: 580px;
+      flex-shrink: 0;
+    }
+
+    .hub-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 3.8vw, 2.1rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .hub-hero-title span {
+      background: linear-gradient(135deg, #f6f6f8 30%, var(--color-gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hub-hero-desc {
+      font-size: clamp(0.82rem, 1.8vw, 0.95rem);
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    /* Game Selection Cards */
+    .hub-games-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(10px, 2vh, 16px);
+      width: 100%;
+      max-width: 680px;
+    }
+
+    @media (min-width: 680px) {
+      .hub-games-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .hub-game-card {
+      position: relative;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: clamp(14px, 2.2vh, 18px);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: all 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .hub-game-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--border-highlight);
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+    }
+
+    .hub-game-card:active {
+      transform: scale(0.98);
+    }
+
+    .hub-game-card.featured-gold:hover {
+      box-shadow: 0 15px 35px rgba(212, 163, 89, 0.15);
+      border-color: rgba(212, 163, 89, 0.4);
+    }
+
+    .hub-game-card.featured-rose:hover {
+      box-shadow: 0 15px 35px rgba(217, 107, 67, 0.18);
+      border-color: rgba(217, 107, 67, 0.4);
+    }
+
+    .game-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .game-card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      flex-shrink: 0;
+    }
+
+    .icon-gold {
+      background: rgba(212, 163, 89, 0.15);
+      color: var(--color-gold);
+      border: 1px solid rgba(212, 163, 89, 0.3);
+    }
+
+    .icon-rose {
+      background: rgba(217, 107, 67, 0.15);
+      color: #ff8863;
+      border: 1px solid rgba(217, 107, 67, 0.3);
+    }
+
+    .badge-tag {
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 4px 9px;
+      border-radius: 99px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .badge-gold {
+      background: rgba(212, 163, 89, 0.15);
+      color: var(--color-gold);
+      border: 1px solid rgba(212, 163, 89, 0.3);
+    }
+
+    .badge-new {
+      background: linear-gradient(135deg, rgba(255, 77, 77, 0.25), rgba(184, 74, 111, 0.3));
+      color: #ff9fb4;
+      border: 1px solid rgba(255, 77, 77, 0.4);
+      box-shadow: 0 0 12px rgba(255, 77, 77, 0.25);
+    }
+
+    .game-card-info h3 {
+      font-family: var(--font-display);
+      font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.25;
+      margin-bottom: 4px;
+    }
+
+    .game-card-info p {
+      font-size: clamp(0.78rem, 1.6vw, 0.84rem);
+      color: var(--text-secondary);
+      line-height: 1.35;
+    }
+
+    .game-card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.74rem;
+      font-family: var(--font-ui);
+      color: var(--text-muted);
+    }
+
+    .game-card-play-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+      color: var(--text-primary);
+      transition: color 0.2s;
+    }
+
+    .hub-game-card:hover .game-card-play-btn {
+      color: var(--color-gold);
+    }
+
+    .hub-game-card.featured-rose:hover .game-card-play-btn {
+      color: #ff8863;
+    }
+
+    .hub-footer {
+      width: 100%;
+      max-width: 840px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    /* ==========================================================================
+       TELA 2: CONFIGURAÇÃO DO JOGO 2 (VERDADE, CONSEQUÊNCIA & MEMÓRIAS)
+       ========================================================================== */
+    #view-game2-setup {
+      padding: calc(var(--safe-top) + 10px) 18px calc(var(--safe-bottom) + 12px) 18px;
+      justify-content: space-between;
+      max-width: 680px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .setup-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      flex-shrink: 0;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+
+    .setup-title-box {
+      flex: 1;
+      text-align: center;
+    }
+
+    .setup-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .setup-subtitle {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }
+
+    .setup-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: clamp(5px, 1.1vh, 9px);
+      min-height: 0;
+      padding: 2px 0;
+      overflow-y: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .setup-body::-webkit-scrollbar { display: none; }
+
+    .setup-section-label {
+      font-size: 0.70rem;
+      font-family: var(--font-ui);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* Mode Selection Tiles */
+    .mode-tiles-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+
+    .mode-tile {
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: clamp(7px, 1.1vh, 10px) 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .mode-tile:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--border-highlight);
+    }
+
+    .mode-tile.selected {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: var(--tile-color, var(--color-gold));
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+    }
+
+    .mode-tile-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mode-tile-icon {
+      font-size: 1.45rem;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.05);
+      flex-shrink: 0;
+    }
+
+    .mode-tile-text h4 {
+      font-family: var(--font-ui);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
       display: flex;
       align-items: center;
       gap: 6px;
     }
 
-    .home-hero {
+    .mode-tile-text p {
+      font-size: 0.74rem;
+      color: var(--text-secondary);
+      line-height: 1.3;
+    }
+
+    .mode-checkbox {
+      width: 22px;
+      height: 22px;
+      border-radius: 7px;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: transparent;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .mode-tile.selected .mode-checkbox {
+      background-color: var(--tile-color, var(--color-gold));
+      border-color: var(--tile-color, var(--color-gold));
+      color: #fff;
+    }
+
+    /* Modo Ousado / Picante Card */
+    .spicy-options-container {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      flex: 1;
-      min-height: 0;
-      padding: 6px 0;
-      max-width: 760px;
-      margin: 0 auto;
-      width: 100%;
+      gap: 7px;
     }
 
-    /* Proporção compacta para caber sem rolar em qualquer tela */
-    .home-deck-preview {
-      position: relative;
-      width: clamp(96px, 14vh, 140px);
-      height: clamp(130px, 19vh, 190px);
-      margin-bottom: clamp(10px, 2vh, 18px);
-      flex-shrink: 0;
-    }
-
-    .home-mini-card {
-      position: absolute;
-      inset: 0;
+    .spicy-toggle-card {
+      background: linear-gradient(135deg, rgba(142, 22, 41, 0.16) 0%, rgba(255, 77, 77, 0.08) 100%);
+      border: 1px solid rgba(255, 77, 77, 0.3);
       border-radius: 16px;
-      border: 1px solid rgba(212, 163, 89, 0.35);
-      background: radial-gradient(130% 130% at 50% 20%, #1e1e28 0%, #101015 100%);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 4px 20px rgba(142, 22, 41, 0.2);
+      transition: all 0.2s ease;
+    }
+
+    .spicy-toggle-card.active {
+      border-color: var(--color-fire);
+      box-shadow: 0 0 25px rgba(255, 77, 77, 0.25);
+      background: linear-gradient(135deg, rgba(142, 22, 41, 0.28) 0%, rgba(255, 77, 77, 0.15) 100%);
+    }
+
+    .spicy-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .spicy-icon {
+      font-size: 1.35rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(255, 77, 77, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.5s ease;
+      flex-shrink: 0;
     }
 
-    .home-mini-card.c1 {
-      transform: translateY(10px) rotate(-8deg) scale(0.9);
-      opacity: 0.5;
-    }
-
-    .home-mini-card.c2 {
-      transform: translateY(5px) rotate(5deg) scale(0.95);
-      opacity: 0.8;
-    }
-
-    .home-mini-card.c3 {
-      transform: translateY(0) rotate(-1.5deg);
-      border-color: var(--color-gold);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(212, 163, 89, 0.25);
-    }
-
-    .home-title {
-      font-family: var(--font-display);
-      font-size: clamp(1.75rem, 4.2vh, 2.7rem);
+    .spicy-text h4 {
+      font-family: var(--font-ui);
+      font-size: 0.92rem;
       font-weight: 700;
-      color: #ffffff;
-      line-height: 1.15;
-      margin-bottom: clamp(6px, 1.2vh, 12px);
-      letter-spacing: -0.01em;
-      background: linear-gradient(135deg, #ffffff 40%, #e2be85 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-wrap: balance;
-      flex-shrink: 0;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .home-subtitle {
-      font-size: clamp(0.85rem, 1.7vh, 1.05rem);
-      color: var(--text-secondary);
-      line-height: 1.4;
-      max-width: 480px;
-      margin: 0 auto clamp(8px, 1.5vh, 14px);
-      text-wrap: balance;
-      flex-shrink: 0;
+    .spicy-badge {
+      background: #ff4d4d;
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 99px;
+      letter-spacing: 0.04em;
     }
 
-    .home-deck-info {
-      display: inline-flex;
+    .spicy-text p {
+      font-size: 0.72rem;
+      color: #ffccd5;
+      line-height: 1.3;
+    }
+
+    /* Only Spicy (Apenas Picantes) Card */
+    .only-spicy-card {
+      background: linear-gradient(135deg, rgba(255, 77, 77, 0.10) 0%, rgba(142, 22, 41, 0.22) 100%);
+      border: 1px dashed rgba(255, 77, 77, 0.35);
+      border-radius: 16px;
+      padding: 9px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: all 0.22s ease;
+    }
+
+    .only-spicy-card.active {
+      border-style: solid;
+      border-color: #ff334b;
+      box-shadow: 0 0 24px rgba(255, 77, 77, 0.35);
+      background: linear-gradient(135deg, rgba(255, 77, 77, 0.24) 0%, rgba(184, 22, 41, 0.35) 100%);
+    }
+
+    .only-spicy-left {
+      display: flex;
       align-items: center;
       gap: 10px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border-subtle);
-      padding: 5px 14px;
-      border-radius: 999px;
-      font-size: clamp(0.74rem, 1.3vh, 0.82rem);
-      color: var(--text-muted);
-      margin-bottom: clamp(8px, 1.5vh, 14px);
+    }
+
+    .only-spicy-icon {
+      font-size: 1.3rem;
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: rgba(255, 77, 77, 0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex-shrink: 0;
     }
 
-    .home-deck-info strong {
-      color: var(--text-primary);
-    }
-
-    /* Pillars */
-    .home-rules-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      width: 100%;
-      max-width: 440px;
-      margin: 0 auto clamp(8px, 1.5vh, 14px);
-      flex-shrink: 0;
-    }
-
-    .rule-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border-subtle);
-      border-radius: 12px;
-      padding: clamp(6px, 1.2vh, 10px) 10px;
-      text-align: center;
-    }
-
-    .rule-num {
+    .only-spicy-text h4 {
       font-family: var(--font-ui);
-      font-size: 0.74rem;
+      font-size: 0.90rem;
       font-weight: 700;
-      color: var(--color-gold);
-      margin-bottom: 2px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .rule-txt {
-      font-size: clamp(0.72rem, 1.3vh, 0.78rem);
-      color: var(--text-secondary);
+    .only-spicy-badge {
+      background: linear-gradient(135deg, #ff4d4d, #b81629);
+      color: #fff;
+      font-size: 0.62rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 99px;
+      letter-spacing: 0.04em;
+      box-shadow: 0 0 10px rgba(255, 77, 77, 0.4);
+    }
+
+    .only-spicy-text p {
+      font-size: 0.71rem;
+      color: #ffd6dc;
       line-height: 1.25;
     }
 
-    .home-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      width: 100%;
-      max-width: 420px;
-      margin: 0 auto;
-      flex-shrink: 0;
+    .mode-tiles-grid.dimmed-by-spicy {
+      opacity: 0.42;
+      pointer-events: none;
+      filter: grayscale(0.4);
+      transition: opacity 0.25s ease, filter 0.25s ease;
     }
 
-    @media (min-width: 768px) {
-      .home-actions {
-        flex-direction: row;
-        max-width: 460px;
-      }
-    }
-
-    .btn-main {
-      width: 100%;
-      height: clamp(46px, 6vh, 52px);
+    /* Reset Cards Bar in Setup */
+    .setup-reset-card {
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid var(--border-subtle);
       border-radius: 14px;
-      font-family: var(--font-ui);
-      font-size: 0.98rem;
-      font-weight: 700;
-      border: none;
-      cursor: pointer;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .setup-reset-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .setup-reset-icon {
+      font-size: 1.15rem;
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      background: rgba(212, 163, 89, 0.12);
+      border: 1px solid rgba(212, 163, 89, 0.25);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+      color: var(--color-gold);
+      flex-shrink: 0;
     }
 
-    .btn-main-primary {
-      background: linear-gradient(135deg, #d4a359 0%, #b84a6f 100%);
-      color: #ffffff;
-      box-shadow: 0 8px 24px rgba(212, 163, 89, 0.26);
+    .setup-reset-title {
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #fff;
     }
 
-    .btn-main-primary:hover {
-      filter: brightness(1.1);
-      transform: translateY(-2px);
+    .setup-reset-desc {
+      font-size: 0.70rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    .btn-main-primary:active {
-      transform: scale(0.98);
+    .btn-reset-action {
+      background: rgba(212, 163, 89, 0.12);
+      border: 1px solid rgba(212, 163, 89, 0.35);
+      color: var(--color-gold);
+      font-family: var(--font-ui);
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
-    .btn-main-outline {
-      background: rgba(255, 255, 255, 0.04);
+    .btn-reset-action:hover {
+      background: rgba(212, 163, 89, 0.22);
+      border-color: var(--color-gold);
+      color: #fff;
+    }
+
+    .btn-reset-action:active {
+      transform: scale(0.95);
+    }
+
+    /* Switch Component */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: rgba(255, 255, 255, 0.15);
+      transition: .3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      border-radius: 34px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      border-radius: 50%;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    input:checked + .slider {
+      background-color: var(--color-fire);
+      box-shadow: 0 0 12px rgba(255, 77, 77, 0.5);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
+    /* Deck Count Summary Banner */
+    .setup-summary {
+      background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border-subtle);
-      color: var(--text-primary);
+      border-radius: 12px;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-ui);
+      font-size: 0.8rem;
+      color: var(--text-secondary);
     }
 
-    .btn-main-outline:hover {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: var(--border-highlight);
+    .setup-count-highlight {
+      font-weight: 700;
+      color: #fff;
     }
 
-    .btn-main-outline:active {
-      transform: scale(0.98);
+    /* Bottom Buttons */
+    .setup-actions {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 10px;
+      width: 100%;
+      flex-shrink: 0;
+      padding-top: 4px;
     }
 
     /* ==========================================================================
-       2. MESA DE JOGO (GAME VIEW) - ZERO ROLAGEM
+       TELA 3: TELA DE JOGO ATIVO - JOGO 2 (VERDADE, CONSEQUÊNCIA & MEMÓRIAS)
        ========================================================================== */
-    #view-game {
+    #view-game2 {
       padding: calc(var(--safe-top) + 10px) 18px calc(var(--safe-bottom) + 12px) 18px;
       justify-content: space-between;
       max-width: 960px;
@@ -414,7 +890,7 @@
       gap: 7px;
       font-family: var(--font-ui);
       font-size: clamp(0.82rem, 1.2vw, 0.94rem);
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.04em;
       text-transform: uppercase;
       color: var(--active-accent);
@@ -426,8 +902,8 @@
     }
 
     .hud-category-dot {
-      width: 7px;
-      height: 7px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background-color: var(--active-accent);
       box-shadow: 0 0 10px var(--active-accent);
@@ -439,193 +915,178 @@
       font-size: 0.74rem;
       color: var(--text-muted);
       margin-top: 2px;
-      font-weight: 500;
-      font-variant-numeric: tabular-nums;
     }
 
-    .hud-actions {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    /* CARD PLAYING AREA - Encaixe dinâmico proporcional à altura */
+    /* Card Arena - Zero Scroll Guarantee */
     .deck-arena {
       flex: 1;
-      min-height: 0;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
-      margin: 6px 0;
-      touch-action: none;
-      overflow: visible;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      min-height: 0;
+      padding: clamp(6px, 1.5vh, 14px) 0;
     }
 
-    .deck-stack-container {
+    .card-wrap {
+      width: 100%;
+      max-width: 440px;
+      height: 100%;
+      max-height: min(480px, 58vh);
       position: relative;
-      /* Ajuste dinâmico que nunca transborda a tela */
-      width: min(84vw, 42vh, 340px);
-      height: min(114vw, 56vh, 470px);
+      touch-action: pan-y;
+      cursor: grab;
+      will-change: transform, opacity;
+      transition: transform 0.24s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
-    @media (min-width: 768px) {
-      .deck-stack-container {
-        width: min(390px, 38vw);
-        height: min(520px, 58vh);
-      }
+    .card-wrap:active {
+      cursor: grabbing;
     }
 
-    @media (min-width: 1024px) {
-      .deck-stack-container {
-        width: min(430px, 40vw);
-        height: min(560px, 60vh);
-      }
-    }
-
-    /* Deck stack layers behind */
-    .deck-stack-card {
+    /* Stack Shadow Effect */
+    .card-shadow-layer {
       position: absolute;
       inset: 0;
-      border-radius: var(--card-radius);
-      background: #171720;
+      border-radius: 26px;
+      background: rgba(20, 20, 26, 0.75);
       border: 1px solid rgba(255, 255, 255, 0.05);
       pointer-events: none;
-      transition: transform 0.3s ease, opacity 0.3s ease;
+      transition: transform 0.3s ease;
     }
 
-    .deck-stack-card.layer-3 {
-      transform: translateY(10px) scale(0.93) rotate(-2.8deg);
-      opacity: 0.4;
-      background: #101014;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6);
+    .card-shadow-layer-1 {
+      transform: translateY(10px) scale(0.96);
+      opacity: 0.5;
+      z-index: 1;
     }
 
-    .deck-stack-card.layer-2 {
-      transform: translateY(6px) scale(0.965) rotate(2deg);
-      opacity: 0.65;
-      background: #15151b;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55);
+    .card-shadow-layer-2 {
+      transform: translateY(20px) scale(0.92);
+      opacity: 0.25;
+      z-index: 0;
     }
 
-    .deck-stack-card.layer-1 {
-      transform: translateY(3px) scale(0.985) rotate(-0.6deg);
-      opacity: 0.85;
-      background: #181822;
-      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.5);
-    }
-
-    /* The Main Active Card */
-    .card-wrap {
-      position: absolute;
-      inset: 0;
-      border-radius: var(--card-radius);
-      background: radial-gradient(120% 120% at 50% 0%, #1f1f28 0%, #131319 100%);
+    /* Main Playing Card */
+    .playing-card {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(160deg, rgba(28, 28, 38, 0.95) 0%, rgba(16, 16, 22, 0.98) 100%);
       border: 1px solid var(--border-subtle);
-      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.65);
-      padding: clamp(18px, 3vh, 30px) clamp(16px, 2.5vw, 26px);
+      border-radius: 26px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      cursor: grab;
-      touch-action: none;
-      will-change: transform;
-      transition: transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.15), box-shadow 0.3s ease;
+      padding: clamp(18px, 3vh, 26px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), 0 0 35px var(--active-glow);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       overflow: hidden;
+      transition: border-color 0.4s ease, box-shadow 0.4s ease;
     }
 
-    .card-wrap::after {
+    .playing-card::before {
       content: '';
       position: absolute;
-      inset: 8px;
-      border-radius: calc(var(--card-radius) - 8px);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      pointer-events: none;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent 0%, var(--active-accent) 50%, transparent 100%);
+      opacity: 0.8;
+      transition: background 0.4s ease;
     }
 
-    .card-wrap.dragging {
-      cursor: grabbing;
-      transition: none !important;
-    }
-
-    .card-wrap.special-glow {
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 32px var(--active-glow), 0 0 0 1.5px var(--active-accent);
-    }
-
-    .card-header {
+    .card-header-line {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
-      z-index: 2;
-    }
-
-    .category-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--font-ui);
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--active-accent);
-      min-width: 0;
-    }
-
-    .creator-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 0.68rem;
-      font-weight: 600;
-      color: #ffd27d;
-      background: rgba(212, 163, 89, 0.15);
-      border: 1px solid rgba(212, 163, 89, 0.35);
-      padding: 2px 8px;
-      border-radius: 999px;
-      letter-spacing: 0.02em;
+      width: 100%;
       flex-shrink: 0;
     }
 
-    .card-body {
+    .card-category-tag {
+      font-family: var(--font-ui);
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--active-accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 5px 12px;
+      border-radius: 99px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: color 0.4s ease;
+    }
+
+    .card-spicy-indicator {
+      display: none;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #ff4d4d;
+      background: rgba(255, 77, 77, 0.15);
+      border: 1px solid rgba(255, 77, 77, 0.35);
+      padding: 4px 10px;
+      border-radius: 99px;
+      box-shadow: 0 0 14px rgba(255, 77, 77, 0.3);
+      animation: pulseFire 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseFire {
+      0%, 100% { opacity: 0.85; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+    }
+
+    /* Question / Challenge Body */
+    .card-content-body {
       flex: 1;
       display: flex;
-      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      padding: 10px 0;
-      z-index: 2;
+      text-align: center;
+      padding: 8px 4px;
+      min-height: 0;
     }
 
     .card-question {
       font-family: var(--font-display);
-      font-size: clamp(1.18rem, 2.6vh, 1.68rem);
-      line-height: 1.45;
+      font-size: clamp(1.1rem, 2.7vh, 1.45rem);
+      line-height: 1.42;
+      color: #f6f6f8;
       font-weight: 600;
-      color: #ffffff;
-      text-align: center;
-      letter-spacing: -0.01em;
-      text-wrap: balance;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+      max-height: 100%;
+      overflow-y: auto;
+      scrollbar-width: none;
     }
 
-    /* CARD FOOTER WITH GENTLE DRAG-LIT CUES */
-    .card-footer {
+    .card-question::-webkit-scrollbar { display: none; }
+
+    /* Minimalist Card Footer with Swipe Indicators */
+    .card-footer-line {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 0.74rem;
-      color: var(--text-muted);
-      z-index: 2;
-      padding-top: 10px;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      width: 100%;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      flex-shrink: 0;
     }
 
     .card-cue {
       font-family: var(--font-ui);
-      font-size: 0.74rem;
+      font-size: 0.72rem;
       font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
       color: var(--text-muted);
       opacity: 0.5;
       display: inline-flex;
@@ -656,7 +1117,7 @@
       opacity: 0.5;
     }
 
-    /* Animations */
+    /* Animations for Exiting / Entering */
     .card-wrap.exit-left {
       transform: translate(-130%, 30px) rotate(-18deg) !important;
       opacity: 0 !important;
@@ -706,7 +1167,7 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      height: clamp(46px, 5.8vh, 50px);
+      height: clamp(46px, 5.8vh, 52px);
       border-radius: 14px;
       font-family: var(--font-ui);
       font-size: 0.94rem;
@@ -733,7 +1194,7 @@
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--active-accent) 0%, rgba(20, 20, 26, 0.9) 160%);
+      background: linear-gradient(135deg, var(--active-accent) 0%, rgba(20, 20, 26, 0.95) 170%);
       background-color: var(--active-accent);
       color: #ffffff;
       box-shadow: 0 8px 24px var(--active-glow);
@@ -765,12 +1226,12 @@
     }
 
     /* ==========================================================================
-       MODALS: CORREÇÃO TOTAL DO BUG MOBILE & DESKTOP
+       MODALS: ZERO ROLAGEM EXTERNA + SHEET ROBUSTA
        ========================================================================== */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(6, 6, 8, 0.84);
+      background: rgba(6, 6, 8, 0.85);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       z-index: 100;
@@ -804,12 +1265,10 @@
       padding: 0 18px calc(var(--safe-bottom) + 16px) 18px;
     }
 
-    /* REGRA CRUCIAL: Abre em 100% de visibilidade no mobile */
     .modal-overlay.open .modal-sheet {
       transform: translateY(0) !important;
     }
 
-    /* Versão Desktop: Caixa de diálogo centralizada */
     @media (min-width: 768px) {
       .modal-overlay {
         align-items: center;
@@ -876,6 +1335,33 @@
       border-radius: 4px;
     }
 
+    /* History Cards */
+    .history-card-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .history-item-cat {
+      font-family: var(--font-ui);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .history-item-q {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      color: #f0f0f4;
+      line-height: 1.35;
+    }
+
+    /* Category list in Game 1 Modal */
     .quick-filters {
       display: flex;
       align-items: center;
@@ -931,9 +1417,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
-      min-height: 50px;
-      transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transition: all 0.2s;
     }
 
     .category-card:hover {
@@ -941,512 +1425,574 @@
     }
 
     .category-card.selected {
-      border-color: var(--cat-color);
-      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--card-cat-color, var(--color-gold));
+      background: rgba(255, 255, 255, 0.07);
     }
 
-    .cat-info {
+    .category-card-info {
       display: flex;
       align-items: center;
       gap: 10px;
-      min-width: 0;
-      flex: 1;
     }
 
-    .cat-badge-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background-color: var(--cat-color);
-      flex-shrink: 0;
-      box-shadow: 0 0 8px var(--cat-color);
+    .category-card-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 4px;
+      background-color: var(--card-cat-color);
     }
 
-    .cat-text {
-      min-width: 0;
-      flex: 1;
-    }
-
-    .cat-name {
+    .category-card-name {
       font-family: var(--font-ui);
-      font-size: 0.86rem;
+      font-size: 0.92rem;
       font-weight: 600;
       color: #fff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
-    .cat-count {
-      font-size: 0.72rem;
+    .category-card-count {
+      font-size: 0.74rem;
       color: var(--text-muted);
     }
 
-    .cat-checkbox {
-      width: 22px;
-      height: 22px;
+    .category-card-check {
+      width: 20px;
+      height: 20px;
       border-radius: 6px;
-      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      border: 2px solid rgba(255, 255, 255, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
+      color: transparent;
       transition: all 0.2s;
     }
 
-    .category-card.selected .cat-checkbox {
-      background-color: var(--cat-color);
-      border-color: var(--cat-color);
+    .category-card.selected .category-card-check {
+      background-color: var(--card-cat-color, var(--color-gold));
+      border-color: var(--card-cat-color, var(--color-gold));
       color: #fff;
     }
 
-    .creator-box {
-      background: linear-gradient(145deg, rgba(30, 24, 28, 0.65) 0%, rgba(20, 18, 24, 0.75) 100%);
+    .creator-toggle-box {
+      background: linear-gradient(135deg, rgba(212, 163, 89, 0.1) 0%, rgba(184, 74, 111, 0.1) 100%);
       border: 1px solid rgba(212, 163, 89, 0.25);
       border-radius: 16px;
       padding: 12px;
       display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .creator-box-header {
-      display: flex;
       align-items: center;
       justify-content: space-between;
-    }
-
-    .creator-title {
-      font-family: var(--font-ui);
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: #ffd27d;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .toggle-switch {
-      position: relative;
-      display: inline-block;
-      width: 46px;
-      height: 26px;
-      flex-shrink: 0;
-    }
-
-    .toggle-switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .toggle-slider {
-      position: absolute;
-      cursor: pointer;
-      inset: 0;
-      background-color: rgba(255, 255, 255, 0.12);
-      border-radius: 34px;
-      transition: 0.25s;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .toggle-slider::before {
-      position: absolute;
-      content: "";
-      height: 18px;
-      width: 18px;
-      left: 3px;
-      bottom: 3px;
-      background-color: #ffffff;
-      border-radius: 50%;
-      transition: 0.25s;
-    }
-
-    input:checked + .toggle-slider {
-      background-color: var(--color-gold);
-      border-color: var(--color-gold);
-    }
-
-    input:checked + .toggle-slider::before {
-      transform: translateX(20px);
-      background-color: #121217;
-    }
-
-    .sheet-footer {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      flex-shrink: 0;
-      padding-top: 10px;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .deck-count-pill {
-      text-align: center;
-      font-size: 0.78rem;
-      color: var(--text-secondary);
-    }
-
-    .deck-count-highlight {
-      color: var(--color-gold);
-      font-weight: 700;
-    }
-
-    .btn-reset-session {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-size: 0.74rem;
-      cursor: pointer;
-      text-decoration: underline;
-      text-align: center;
-      padding: 3px;
-      transition: color 0.2s;
-    }
-    .btn-reset-session:hover { color: #ffd27d; }
-
-    /* HISTORY MODAL */
-    .history-card-item {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border-subtle);
-      border-radius: 12px;
-      padding: 10px 12px;
-      margin-bottom: 6px;
-    }
-
-    .history-item-cat {
-      font-size: 0.7rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      margin-bottom: 2px;
-    }
-
-    .history-item-q {
-      font-size: 0.85rem;
-      color: #e5e5ed;
-      line-height: 1.4;
-    }
-
-    /* END OF DECK MODAL */
-    .end-game-box {
-      text-align: center;
-      padding: 16px 6px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       gap: 12px;
     }
 
-    .end-emblem {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: rgba(212, 163, 89, 0.15);
-      border: 1.5px solid var(--color-gold);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--color-gold);
+    /* Modal End of Deck */
+    .deck-empty-state {
+      text-align: center;
+      padding: 24px 8px;
+    }
+
+    .deck-empty-icon {
+      font-size: 3rem;
+      margin-bottom: 12px;
+    }
+
+    .deck-empty-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .deck-empty-desc {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
-
-  <!-- Dynamic Ambient Glow Background -->
+  <!-- Ambient background glow -->
   <div class="ambient-glow" id="ambient-glow"></div>
   <div class="texture-overlay"></div>
 
-  <!-- Main Container -->
-  <main id="app-container">
+  <div id="app-container">
 
-    <!-- ======================================================================
-         1. MENU INICIAL (HOME VIEW) - CABE TOTALMENTE NO ECRÃ
-         ====================================================================== -->
-    <section class="view-screen active" id="view-home">
-      <!-- Header -->
-      <div class="home-header">
-        <span class="home-brand-tag">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          Edição Casais
-        </span>
-
-        <button class="icon-btn" id="btn-home-sound" aria-label="Alternar Som">
-          <svg class="icon-sound-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-          </svg>
-          <svg class="icon-sound-off" style="display: none;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-            <line x1="23" y1="9" x2="17" y2="15"></line>
-            <line x1="17" y1="9" x2="23" y2="15"></line>
-          </svg>
-        </button>
-      </div>
-
-      <!-- Hero Content -->
-      <div class="home-hero">
-        <div class="home-deck-preview">
-          <div class="home-mini-card c1"></div>
-          <div class="home-mini-card c2"></div>
-          <div class="home-mini-card c3">
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="1.8">
+    <!-- =====================================================================
+         TELA 1: HUB DE JOGOS PRINCIPAL (MOMENTOS A DOIS)
+         ===================================================================== -->
+    <main class="view-screen active" id="view-hub">
+      <header class="hub-header">
+        <div class="hub-header-brand">
+          <div class="hub-brand-logo">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
             </svg>
           </div>
-        </div>
-
-        <h1 class="home-title">Isso Não É Só<br>Sobre Nós</h1>
-        <p class="home-subtitle">
-          Um jogo de cartas intimista para criar conexões profundas, diálogo aberto e cumplicidade a dois.
-        </p>
-
-        <!-- Deck Info Badge -->
-        <div class="home-deck-info">
-          <span><strong id="home-total-cards">79</strong> cartas</span>
-          <span>·</span>
-          <span>Sem repetição</span>
-          <span>·</span>
-          <span>Perguntas diretas</span>
-        </div>
-
-        <!-- How to Play Quick Pillars -->
-        <div class="home-rules-row">
-          <div class="rule-card">
-            <div class="rule-num">01</div>
-            <div class="rule-txt">Uma pergunta por vez</div>
-          </div>
-          <div class="rule-card">
-            <div class="rule-num">02</div>
-            <div class="rule-txt">Sem pressa ou julgamentos</div>
+          <div>
+            <h1 class="hub-brand-title">Momentos a Dois</h1>
+            <p class="hub-brand-sub">Jogos de Conexão & Diversão</p>
           </div>
         </div>
-      </div>
-
-      <!-- Actions -->
-      <div class="home-actions">
-        <button class="btn-main btn-main-primary" id="btn-start-playing">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          Começar a Jogar
+        <button class="icon-btn" id="btn-hub-sound" title="Alternar som">
+          <svg class="icon-sound-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+          </svg>
+          <svg class="icon-sound-off" style="display:none;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="1" y1="1" x2="23" y2="23"></line>
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          </svg>
         </button>
+      </header>
 
-        <button class="btn-main btn-main-outline" id="btn-home-customize">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
-          Personalizar Categorias
+      <section class="hub-body">
+        <div class="hub-hero-text">
+          <h2 class="hub-hero-title">Escolham a <span>experiência</span> de hoje</h2>
+          <p class="hub-hero-desc">Espaço intimista para conversar, rir, se redescobrir e aproximar ainda mais quem você ama.</p>
+        </div>
+
+        <div class="hub-games-grid">
+          <!-- Card 1: Isso Não É Só Sobre Nós -->
+          <article class="hub-game-card featured-gold" id="card-launch-game1">
+            <div class="game-card-top">
+              <div class="game-card-icon icon-gold">🃏</div>
+              <span class="badge-tag badge-gold">Clássico</span>
+            </div>
+            <div class="game-card-info">
+              <h3>Isso Não É Só Sobre Nós</h3>
+              <p>Perguntas profundas sobre confiança, coragem, revelação e intimidade com física fluida de baralho.</p>
+            </div>
+            <div class="game-card-meta">
+              <span>79 cartas • 6 categorias</span>
+              <span class="game-card-play-btn">
+                Jogar 
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </span>
+            </div>
+          </article>
+
+          <!-- Card 2: Verdade, Consequência & Memórias -->
+          <article class="hub-game-card featured-rose" id="card-launch-game2">
+            <div class="game-card-top">
+              <div class="game-card-icon icon-rose">✨</div>
+              <span class="badge-tag badge-new">Novo</span>
+            </div>
+            <div class="game-card-info">
+              <h3>Verdade, Consequência & Memórias</h3>
+              <p>Nostalgia do relacionamento, dilemas estilo "Você preferiria..." e prendas carinhosas com Modo Ousado 🔥.</p>
+            </div>
+            <div class="game-card-meta">
+              <span>150 cartas • 3 modos</span>
+              <span class="game-card-play-btn">
+                Configurar 
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <footer class="hub-footer">
+        <p>Criado para aproximar corações • 100% offline e sem repetições</p>
+      </footer>
+    </main>
+
+    <!-- =====================================================================
+         TELA 2: CONFIGURAÇÃO DO JOGO 2 (PRÉ-PARTIDA)
+         ===================================================================== -->
+    <main class="view-screen" id="view-game2-setup">
+      <header class="setup-header">
+        <button class="icon-btn" id="btn-setup-back-hub" title="Voltar ao Hub">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
         </button>
-      </div>
-    </section>
+        <div class="setup-title-box">
+          <h2 class="setup-title">Verdade, Consequência & Memórias</h2>
+          <p class="setup-subtitle">Configure os modos da rodada</p>
+        </div>
+        <div style="width: 42px;"></div>
+      </header>
 
-    <!-- ======================================================================
-         2. MESA DE JOGO (GAME VIEW) - CABE TOTALMENTE NO ECRÃ
-         ====================================================================== -->
-    <section class="view-screen" id="view-game">
+      <section class="setup-body">
+        <div class="setup-section-label">Selecione os Modos Ativos</div>
+        
+        <div class="mode-tiles-grid" id="mode-tiles-grid">
+          <!-- Nostalgia -->
+          <div class="mode-tile selected" id="tile-nostalgia" style="--tile-color: #D4A359;">
+            <div class="mode-tile-left">
+              <div class="mode-tile-icon">🕰️</div>
+              <div class="mode-tile-text">
+                <h4>Nostalgia</h4>
+                <p>Lembranças marcantes, início do namoro e viagens (40 cartas)</p>
+              </div>
+            </div>
+            <div class="mode-checkbox">✓</div>
+          </div>
+
+          <!-- Dilemas -->
+          <div class="mode-tile selected" id="tile-dilemas" style="--tile-color: #2E6F89;">
+            <div class="mode-tile-left">
+              <div class="mode-tile-icon">🤔</div>
+              <div class="mode-tile-text">
+                <h4>Dilemas</h4>
+                <p>Situações divertidas estilo "Você preferiria..." (40 cartas)</p>
+              </div>
+            </div>
+            <div class="mode-checkbox">✓</div>
+          </div>
+
+          <!-- Prendas -->
+          <div class="mode-tile selected" id="tile-prendas" style="--tile-color: #4E8569;">
+            <div class="mode-tile-left">
+              <div class="mode-tile-icon">🎯</div>
+              <div class="mode-tile-text">
+                <h4>Prendas</h4>
+                <p>Ações, carinhos, imitações e desafios a dois (40 cartas)</p>
+              </div>
+            </div>
+            <div class="mode-checkbox">✓</div>
+          </div>
+        </div>
+
+        <!-- Modo Ousado e Apenas Picantes Container -->
+        <div class="spicy-options-container">
+          <!-- Modo Ousado / Picante Toggle -->
+          <div class="spicy-toggle-card" id="spicy-toggle-card">
+            <div class="spicy-info">
+              <div class="spicy-icon">🔥</div>
+              <div class="spicy-text">
+                <h4>Modo Ousado / Picante <span class="spicy-badge">+18</span></h4>
+                <p>Adiciona +30 dilemas e prendas quentes e provocantes</p>
+              </div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="toggle-spicy-mode">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <!-- Opção Exclusiva: Apenas Picantes -->
+          <div class="only-spicy-card" id="only-spicy-card">
+            <div class="only-spicy-left">
+              <div class="only-spicy-icon">🌶️</div>
+              <div class="only-spicy-text">
+                <h4>Apenas Picantes <span class="only-spicy-badge">Exclusivo +18</span></h4>
+                <p>Joga SOMENTE as 30 cartas picantes (sem perguntas leves)</p>
+              </div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="toggle-only-spicy">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Reiniciar Baralho / Cartas da Sessão -->
+        <div class="setup-reset-card" id="setup-reset-card">
+          <div class="setup-reset-info">
+            <div class="setup-reset-icon">🔄</div>
+            <div>
+              <div class="setup-reset-title">Cartas da Sessão</div>
+              <div class="setup-reset-desc" id="setup-g2-status-text">0 cartas jogadas</div>
+            </div>
+          </div>
+          <button type="button" class="btn-reset-action" id="btn-g2-reset-cards" title="Zerar cartas jogadas para voltarem todas ao monte">
+            Reiniciar Cartas
+          </button>
+        </div>
+
+        <div class="setup-summary">
+          <span>Baralho da rodada:</span>
+          <span class="setup-count-highlight" id="setup-card-count">120 cartas prontas</span>
+        </div>
+      </section>
+
+      <footer class="setup-actions">
+        <button class="btn-action btn-secondary" id="btn-setup-cancel">
+          Voltar
+        </button>
+        <button class="btn-action btn-primary" id="btn-setup-start">
+          Começar Partida
+        </button>
+      </footer>
+    </main>
+
+    <!-- =====================================================================
+         TELA 3: TELA DE JOGO ATIVO - JOGO 2 (VERDADE, CONSEQUÊNCIA & MEMÓRIAS)
+         ===================================================================== -->
+    <main class="view-screen" id="view-game2">
       <!-- Top HUD -->
       <header class="top-bar">
-        <button class="icon-btn" id="btn-back-home" aria-label="Menu Inicial" title="Voltar ao Menu Inicial">
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        <button class="icon-btn" id="btn-game2-settings" title="Configurar Modos">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
         </button>
 
         <div class="hud-meta">
-          <div class="hud-category" id="hud-category">
-            <span class="hud-category-dot" id="hud-category-dot"></span>
-            <span id="hud-category-name">Confiança</span>
+          <div class="hud-category">
+            <span class="hud-category-dot" id="hud2-dot"></span>
+            <span id="hud2-category-name">Nostalgia</span>
           </div>
-          <div class="hud-progress" id="hud-progress">Carta 1 de 79 restantes</div>
+          <span class="hud-progress" id="hud2-progress">120 cartas restantes</span>
         </div>
 
-        <div class="hud-actions">
-          <button class="icon-btn" id="btn-open-deck-menu" aria-label="Configurar Baralho" title="Categorias & Filtros">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line>
-              <line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line>
-              <line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line>
-              <line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line>
+        <div style="display: flex; gap: 8px;">
+          <button class="icon-btn" id="btn-game2-history" title="Histórico da rodada">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+              <path d="M3 3v5h5"/>
+              <path d="M12 7v5l4 2"/>
             </svg>
           </button>
-
-          <button class="icon-btn" id="btn-history" aria-label="Histórico de Cartas" title="Perguntas Respondidas">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
-            </svg>
-          </button>
-
-          <button class="icon-btn" id="btn-toggle-sound" aria-label="Alternar Som">
-            <svg class="icon-sound-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <button class="icon-btn" id="btn-game2-sound" title="Alternar som">
+            <svg class="icon-sound-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
             </svg>
-            <svg class="icon-sound-off" style="display: none;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="icon-sound-off" style="display:none;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="1" y1="1" x2="23" y2="23"></line>
               <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-              <line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>
             </svg>
           </button>
         </div>
       </header>
 
-      <!-- Center Playmat / Deck Arena -->
-      <div class="deck-arena" id="deck-arena">
-        <div class="deck-stack-container" id="deck-stack">
-          <!-- Stack depth cards behind -->
-          <div class="deck-stack-card layer-3"></div>
-          <div class="deck-stack-card layer-2"></div>
-          <div class="deck-stack-card layer-1"></div>
+      <!-- Center Card Arena -->
+      <section class="deck-arena">
+        <div class="card-wrap enter-spring" id="card2-active-wrap">
+          <div class="card-shadow-layer card-shadow-layer-2"></div>
+          <div class="card-shadow-layer card-shadow-layer-1"></div>
 
-          <!-- Active Card: Face-Up with Discreet Bottom Text Cues -->
-          <div class="card-wrap" id="active-card" tabindex="0" role="region" aria-label="Carta atual. Deslize para a esquerda para Próxima, ou para a direita para Pular">
-            <div class="card-header">
-              <span class="category-tag" id="card-cat-tag">
-                <span id="card-cat-tag-text">Confiança</span>
-              </span>
-              <span class="creator-badge" id="card-creator-badge" style="display: none;">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                Especial
-              </span>
+          <div class="playing-card" id="card2-active">
+            <div class="card-header-line">
+              <div class="card-category-tag" id="card2-tag">
+                <span id="card2-icon">🕰️</span>
+                <span id="card2-cat-title">Nostalgia</span>
+              </div>
+              <div class="card-spicy-indicator" id="card2-spicy-indicator">
+                🔥 Picante
+              </div>
             </div>
 
-            <div class="card-body">
-              <p class="card-question" id="card-question-text">
+            <div class="card-content-body">
+              <p class="card-question" id="card2-question-text">
                 Carregando pergunta...
               </p>
             </div>
 
-            <!-- Card footer with discreet 'Próxima' and 'Pular' text cues directly on the card -->
-            <div class="card-footer">
-              <span class="card-cue cue-next" id="cue-next">‹ Próxima</span>
-              <span class="card-brand-sub">Isso não é só sobre nós</span>
-              <span class="card-cue cue-skip" id="cue-skip">Pular ›</span>
+            <div class="card-footer-line">
+              <span class="card-cue cue-next" id="cue2-next">‹ Próxima</span>
+              <span class="card-brand-sub">Verdade & Memórias</span>
+              <span class="card-cue cue-skip" id="cue2-skip">Pular ›</span>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Bottom Controls: Pular & Próxima -->
-      <div class="bottom-controls-wrap">
+      <!-- Fixed Bottom Action Controls -->
+      <footer class="bottom-controls-wrap">
         <div class="bottom-controls">
-          <button class="btn-action btn-secondary" id="btn-skip" aria-label="Pular pergunta">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="5" x2="19" y2="19"></line></svg>
+          <button class="btn-action btn-secondary" id="btn2-skip" title="Pular carta (deslizar para direita)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="5" x2="19" y2="19"></line></svg>
             Pular
           </button>
-
-          <button class="btn-action btn-primary" id="btn-next" aria-label="Próxima Pergunta">
-            Próxima Pergunta
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          <button class="btn-action btn-primary" id="btn2-next" title="Próxima carta (deslizar para esquerda)">
+            Próxima Carta
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
           </button>
         </div>
+        <p class="desktop-hint">Dica: use <kbd>Espaço</kbd> ou <kbd>←</kbd> para próxima e <kbd>→</kbd> para pular</p>
+      </footer>
+    </main>
 
-        <div class="desktop-hint">
-          Atalhos: <kbd>Espaço</kbd> ou <kbd>→</kbd> Próxima · <kbd>←</kbd> Pular · Arraste para o lado
+    <!-- =====================================================================
+         TELA 4: JOGO 1 ORIGINAL ("ISSO NÃO É SÓ SOBRE NÓS")
+         ===================================================================== -->
+    <main class="view-screen" id="view-game1">
+      <header class="top-bar">
+        <button class="icon-btn" id="btn-game1-to-hub" title="Voltar ao Hub de Jogos">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+
+        <div class="hud-meta">
+          <div class="hud-category">
+            <span class="hud-category-dot" id="hud1-category-dot"></span>
+            <span id="hud1-category-name">Confiança</span>
+          </div>
+          <span class="hud-progress" id="hud1-progress">79 cartas restantes</span>
         </div>
-      </div>
-    </section>
 
-  </main>
+        <div style="display: flex; gap: 8px;">
+          <button class="icon-btn" id="btn-game1-deck-menu" title="Personalizar Categorias">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+              <line x1="9" x2="15" y1="9" y2="9"/>
+              <line x1="9" x2="15" y1="15" y2="15"/>
+            </svg>
+          </button>
+          <button class="icon-btn" id="btn-game1-history" title="Histórico da rodada">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+              <path d="M3 3v5h5"/>
+              <path d="M12 7v5l4 2"/>
+            </svg>
+          </button>
+        </div>
+      </header>
 
-  <!-- ======================================================================
-       MODAL: CONFIGURAÇÃO DE CATEGORIAS (CORRIGIDO MOBILE & DESKTOP)
-       ====================================================================== -->
-  <div class="modal-overlay" id="modal-deck" role="dialog" aria-modal="true" aria-labelledby="sheet-heading">
+      <section class="deck-arena">
+        <div class="card-wrap enter-spring" id="card1-active-wrap">
+          <div class="card-shadow-layer card-shadow-layer-2"></div>
+          <div class="card-shadow-layer card-shadow-layer-1"></div>
+
+          <div class="playing-card" id="card1-active">
+            <div class="card-header-line">
+              <div class="card-category-tag">
+                <span id="card1-cat-tag-text">Confiança</span>
+              </div>
+              <div class="card-spicy-indicator" id="card1-creator-badge" style="display: none; background: rgba(212, 163, 89, 0.15); color: #D4A359; border-color: rgba(212, 163, 89, 0.4);">
+                ★ Criador
+              </div>
+            </div>
+
+            <div class="card-content-body">
+              <p class="card-question" id="card1-question-text">
+                Carregando pergunta...
+              </p>
+            </div>
+
+            <div class="card-footer-line">
+              <span class="card-cue cue-next" id="cue1-next">‹ Próxima</span>
+              <span class="card-brand-sub">Não É Só Sobre Nós</span>
+              <span class="card-cue cue-skip" id="cue1-skip">Pular ›</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="bottom-controls-wrap">
+        <div class="bottom-controls">
+          <button class="btn-action btn-secondary" id="btn1-skip" title="Pular pergunta">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="5" x2="19" y2="19"></line></svg>
+            Pular
+          </button>
+          <button class="btn-action btn-primary" id="btn1-next" title="Próxima pergunta">
+            Próxima Pergunta
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+        </div>
+        <p class="desktop-hint">Dica: use <kbd>Espaço</kbd> ou <kbd>←</kbd> para próxima e <kbd>→</kbd> para pular</p>
+      </footer>
+    </main>
+
+  </div>
+
+  <!-- =====================================================================
+       MODAIS COMPARTILHADOS
+       ===================================================================== -->
+
+  <!-- Modal 1: Personalizar Categorias do Jogo 1 -->
+  <div class="modal-overlay" id="modal-game1-deck">
     <div class="modal-sheet">
       <div class="sheet-handle"></div>
-
       <div class="sheet-header">
-        <h3 class="sheet-title" id="sheet-heading">Categorias do Baralho</h3>
-        <button class="icon-btn" id="btn-close-deck-modal" aria-label="Fechar configurações">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
+        <h3 class="sheet-title">Categorias do Baralho</h3>
+        <button class="icon-btn" id="btn-close-game1-modal">✕</button>
       </div>
 
       <div class="sheet-body">
         <div class="quick-filters">
-          <button class="btn-chip" id="btn-select-all">Selecionar Todas</button>
-          <button class="btn-chip" id="btn-clear-all">Limpar Seleção</button>
+          <button class="btn-chip" id="btn-g1-select-all">Selecionar Todas</button>
+          <button class="btn-chip" id="btn-g1-clear-all">Limpar</button>
+        </div>
+
+        <div class="creator-toggle-box">
+          <div>
+            <div style="font-family: var(--font-ui); font-size: 0.95rem; font-weight: 700; color: #fff;">Categorias do Criador</div>
+            <div style="font-size: 0.74rem; color: var(--color-gold);">Inclui "Cumplicidade" e "Intensidade (+18)"</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="toggle-creator-categories" checked>
+            <span class="slider"></span>
+          </label>
         </div>
 
         <div>
           <div class="category-section-label">Categorias Originais</div>
-          <div class="category-list" id="original-categories-list"></div>
+          <div class="category-list" id="g1-original-categories-list"></div>
         </div>
 
-        <div class="creator-box">
-          <div class="creator-box-header">
-            <div class="creator-title">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-              Categorias do Criador
-            </div>
-            <label class="toggle-switch" aria-label="Ativar Categorias do Criador">
-              <input type="checkbox" id="toggle-creator-categories" checked>
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-
-          <div class="category-list" id="creator-categories-list"></div>
+        <div id="g1-creator-section-wrap">
+          <div class="category-section-label">Decks Especiais do Criador</div>
+          <div class="category-list" id="g1-creator-categories-list"></div>
         </div>
       </div>
 
-      <div class="sheet-footer">
-        <div class="deck-count-pill">
-          <span class="deck-count-highlight" id="deck-count-total">79</span> cartas selecionadas nesta rodada
-        </div>
-        <button class="btn-main btn-main-primary" id="btn-apply-and-shuffle">
+      <div style="display: grid; grid-template-columns: 1fr; gap: 8px; padding-top: 10px;">
+        <button class="btn-action btn-primary" id="btn-g1-apply">
           Salvar & Continuar
         </button>
-        <button class="btn-reset-session" id="btn-reset-session">
-          Reiniciar baralho e esquecer cartas já vistas
-        </button>
       </div>
     </div>
   </div>
 
-  <!-- ======================================================================
-       MODAL: HISTÓRICO DE PERGUNTAS RESPONDIDAS
-       ====================================================================== -->
-  <div class="modal-overlay" id="modal-history" role="dialog" aria-modal="true">
+  <!-- Modal 2: Histórico de Perguntas / Ações -->
+  <div class="modal-overlay" id="modal-history">
     <div class="modal-sheet">
       <div class="sheet-handle"></div>
-
       <div class="sheet-header">
-        <h3 class="sheet-title">Perguntas Respondidas</h3>
-        <button class="icon-btn" id="btn-close-history-modal" aria-label="Fechar histórico">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
+        <h3 class="sheet-title">Histórico da Partida</h3>
+        <button class="icon-btn" id="btn-close-history-modal">✕</button>
       </div>
 
-      <div class="sheet-body" id="history-items-container"></div>
+      <div class="sheet-body" id="history-items-container">
+        <!-- Itens inseridos dinamicamente -->
+      </div>
+
+      <div style="padding-top: 8px;">
+        <button class="btn-action btn-secondary" style="width: 100%;" id="btn-close-history-action">
+          Voltar ao Jogo
+        </button>
+      </div>
     </div>
   </div>
 
-  <!-- ======================================================================
-       MODAL: FIM DO BARALHO
-       ====================================================================== -->
-  <div class="modal-overlay" id="modal-end" role="dialog" aria-modal="true">
-    <div class="modal-sheet">
+  <!-- Modal 3: Fim de Baralho / Embaralhar Novamente -->
+  <div class="modal-overlay" id="modal-end">
+    <div class="modal-sheet" style="text-align: center;">
       <div class="sheet-handle"></div>
-      <div class="end-game-box">
-        <div class="end-emblem">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-        </div>
-        <h3 class="sheet-title">Todas as Cartas Concluídas!</h3>
-        <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.45; max-width: 380px;">
-          Vocês completaram todas as cartas disponíveis desta sessão sem repetições! Esperamos que cada conversa tenha criado momentos inesquecíveis.
+      <div class="deck-empty-state">
+        <div class="deck-empty-icon">🎉</div>
+        <h3 class="deck-empty-title">Vocês completaram as cartas!</h3>
+        <p class="deck-empty-desc">
+          Todas as cartas das categorias ativas foram jogadas nesta sessão sem repetição. Desejam reembaralhar tudo para continuar?
         </p>
-        <button class="btn-main btn-main-primary" id="btn-restart-deck" style="margin-top: 6px;">
-          Recomeçar Baralho Completo
-        </button>
-        <button class="btn-main btn-main-outline" id="btn-end-to-home">
-          Voltar ao Menu Inicial
-        </button>
+
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <button class="btn-action btn-primary" id="btn-restart-deck">
+            Reembaralhar & Continuar
+          </button>
+          <button class="btn-action btn-secondary" id="btn-end-to-hub">
+            Voltar ao Menu Principal
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- JAVASCRIPT: LOGIC, DIALOG CONTROLS & GESTURE HIGHLIGHT -->
+  <!-- =====================================================================
+       SCRIPT PRINCIPAL (COMPLETO, OFFLINE & MODULAR)
+       ===================================================================== -->
   <script>
-    (function () {
+    (function() {
       'use strict';
 
       /* ==========================================================================
-         1. BANCO DE CARTAS (79 PERGUNTAS)
+         1. BASE DE DADOS: JOGO 1 ("ISSO NÃO É SÓ SOBRE NÓS")
          ========================================================================== */
-      const CATEGORIES = {
+      const G1_CATEGORIES = {
         confianca: {
           id: 'confianca',
           name: 'Confiança',
@@ -1484,15 +2030,14 @@
             "O que faz você se sentir mais vivo?",
             "Como você descreveria um dia perfeito?",
             "Qual é o hábito mais importante que você mantém?",
-            "O que te faz se sentir mais confortável quando se sente triste?",
-            "Você prefere rotina ou espontaneidade?",
-            "Qual é a sua maior fonte de motivação?",
-            "Você prefere resolver problemas sozinho ou com a ajuda de outras pessoas?",
-            "O que você gostaria de ter mais tempo para fazer?",
-            "Você se considera uma pessoa introvertida ou extrovertida?",
-            "Qual foi o maior risco que você já tomou?",
-            "O que você faria se não tivesse medo de falhar?",
-            "Quais são as 3 coisas que você mais valoriza na vida?"
+            "O que te faz se sentir mais vulnerável?",
+            "Qual é o seu maior objetivo para os próximos anos?",
+            "O que é algo que você gostaria de mudar na sua rotina diária?",
+            "Qual é a sua lembrança mais feliz?",
+            "O que você acha que é mais importante: a jornada ou o destino?",
+            "Qual foi o momento em que você sentiu que mais cresceu como pessoa?",
+            "O que você faz quando precisa recarregar as energias?",
+            "Qual conselho você daria para você mesmo mais jovem?"
           ]
         },
         revelacao: {
@@ -1501,21 +2046,22 @@
           color: '#4E8569',
           isCreator: false,
           questions: [
-            "Qual foi a decisão mais difícil que você teve que tomar?",
-            "Você se sente confortável expressando as suas emoções?",
-            "Qual é a melhor lembrança que você tem da sua infância?",
-            "Como você lida com situações de conflitos ou desacordo?",
-            "O que te faz se sentir amado e apreciado?",
-            "O que você considera como um 'lar'?",
-            "O que você mais valoriza em um relacionamento?",
-            "Qual foi a última vez que você se sentiu realmente vulnerável?",
-            "Qual foi a última vez que você teve o coração partido?",
-            "Você já perdoou alguém, mesmo quando era difícil?",
-            "O que você acredita ser o propósito da vida?",
-            "Qual é o maior sonho que você ainda não realizou?",
-            "O que você acha que é mais difícil para as pessoas entenderem sobre você?",
-            "O que te faz se sentir verdadeiramente grato?",
-            "O que significa para você estar em paz consigo mesmo?"
+            "Qual é a sua memória favorita de nós dois até agora?",
+            "O que você mais gosta no meu jeito de ser?",
+            "Qual é uma coisa que você nunca me contou sobre como se sentiu no início do nosso relacionamento?",
+            "Como você descreveria o nosso relacionamento para alguém que não nos conhece?",
+            "Qual é a sua maneira preferida de receber carinho?",
+            "O que é algo simples que eu faço e que sempre te faz sorrir?",
+            "Qual é o momento do dia em que você mais gosta de estar comigo?",
+            "Qual é a viagem dos seus sonhos que você gostaria de fazer comigo?",
+            "Se nós tivéssemos um lema de casal, qual você acha que seria?",
+            "Qual é a coisa mais engraçada ou inusitada que já aconteceu com a gente?",
+            "O que você aprendeu sobre você mesmo desde que estamos juntos?",
+            "Qual é a sua foto favorita de nós dois?",
+            "Se fôssemos criar uma tradição nossa, qual você gostaria que fosse?",
+            "Como você descreveria o que significa amor para você hoje?",
+            "Qual é a sua memória favorita de um momento silencioso que compartilhamos?",
+            "O que você espera que nunca mude na forma como nós nos relacionamos?"
           ]
         },
         construcao: {
@@ -1524,22 +2070,22 @@
           color: '#2E6F89',
           isCreator: false,
           questions: [
-            "O que você gostaria que as pessoas entendessem sobre você, mas tem dificuldade?",
-            "Como você acha que as pessoas que você conhece te descreveriam?",
-            "Qual foi o momento que você se sentiu mais conectado a outra pessoa?",
-            "O que você espera deixar como legado para o mundo?",
-            "Quais são os arrependimentos que você carrega?",
-            "Se soubesse que iria morrer em um ano, o que mudaria em sua vida?",
-            "O que você acredita ser o seu maior talento ou dom?",
-            "O que mais te assusta na ideia de amar alguém profundamente?",
-            "Você se sente confortável em aceitar ajuda quando precisa?",
-            "Qual é o papel do perdão na sua vida?",
-            "O que te faz sentir que você está vivendo a sua vida de maneira autêntica?",
-            "O que você gostaria que fosse diferente no modo como expressa seus sentimentos?",
-            "O que significa para você ser vulnerável?",
-            "Qual é a memória mais dolorosa que você já teve que enfrentar?",
-            "O que você sente que ainda precisa resolver na sua vida?",
-            "Qual é a coisa mais corajosa que você já fez?"
+            "O que nós podemos fazer juntos para continuar nos aproximando cada vez mais?",
+            "Qual sonho nós temos em comum que você mais quer ver se realizar?",
+            "Como podemos nos apoiar melhor quando um de nós está passando por um dia difícil?",
+            "Qual conversa nós ainda não tivemos, mas que você sente que deveríamos ter?",
+            "De que forma você acha que podemos crescer juntos sem perder a nossa individualidade?",
+            "O que você mais valoriza na nossa parceria no dia a dia?",
+            "O que significa para você um futuro construído a dois?",
+            "Como podemos tornar a nossa comunicação ainda mais aberta e segura?",
+            "Qual é um desafio que nós superamos e que te fez ter mais certeza de que somos um bom time?",
+            "O que podemos fazer para manter viva a curiosidade de aprender um sobre o outro?",
+            "Como nós podemos equilibrar melhor os nossos planos individuais com os nossos planos a dois?",
+            "Qual é o hábito que nós poderíamos criar juntos para melhorar a nossa convivência?",
+            "O que você sente que nós precisamos proteger no nosso relacionamento?",
+            "Como podemos garantir que continuaremos nos divertindo tanto quanto no início?",
+            "Qual é a qualidade mais bonita que você vê no que nós estamos construindo juntos?",
+            "O que você gostaria de me agradecer hoje que talvez não tenha tido a chance de dizer?"
           ]
         },
         cumplicidade: {
@@ -1548,475 +2094,841 @@
           color: '#B84A6F',
           isCreator: true,
           questions: [
-            "Qual foi o instante exato em que você percebeu que tínhamos algo especial?",
-            "Qual detalhe simples da nossa rotina juntos faz você sorrir por dentro?",
-            "Existe algum hábito ou mania minha que você acha secretamente adorável?",
-            "Se pudéssemos congelar um único dia que vivemos juntos para reviver sempre, qual você escolheria?",
-            "Qual música lembra imediatamente a gente quando começa a tocar?",
-            "De que forma eu consigo te acalmar quando você está em um dia difícil?",
-            "Qual sonho nosso compartilhado você mais quer ver se tornar realidade em breve?",
-            "O que você aprendeu sobre si mesmo desde que começamos a caminhar juntos?"
+            "Qual foi a primeira vez que você sentiu que éramos mais do que apenas duas pessoas se conhecendo?",
+            "O que eu faço sem perceber que te faz se sentir a pessoa mais amada do mundo?",
+            "Se pudéssemos reviver 24 horas de qualquer momento que já passamos juntos, qual dia você escolheria?",
+            "Qual é a coisa mais boba ou sem sentido que nós dois compartilhamos e que você não trocaria por nada?",
+            "Qual você acha que é o nosso maior superpoder quando estamos juntos?",
+            "Em que momento recente você me olhou e pensou: 'que bom que é você'?",
+            "Qual segredo ou vulnerabilidade sua você só teve coragem de mostrar pra mim?",
+            "O que a gente construiu até hoje que te dá mais orgulho de olhar para trás e ver?"
           ]
         },
         intensidade: {
           id: 'intensidade',
-          name: 'Intensidade & Desejo (+18)',
+          name: 'Intensidade & Desejo',
           color: '#8E1629',
           isCreator: true,
           questions: [
-            "Qual toque meu provoca arrepios imediatos em você?",
-            "Existe um lugar específico onde você sempre teve vontade de me beijar e ainda não beijou?",
-            "O que eu faço ou visto que te deixa instantaneamente atraído(a) por mim?",
-            "Qual é a sua fantasia romântica ou momento a sós que você adoraria realizar comigo hoje à noite?",
-            "Você prefere a intensidade de um beijo demorado e lento ou a surpresa de um momento repentino e urgente?",
-            "O que mais desperta a sua imaginação quando ficamos a sós no escuro?",
-            "Qual lembrança de nós dois juntos na cama ainda faz a sua mente viajar durante o dia?",
-            "Diga, sussurrando perto do meu ouvido, o que você quer que a gente faça assim que essa rodada acabar."
+            "Qual toque meu arrepia você instantaneamente?",
+            "Qual é a sua fantasia mais secreta comigo que você ainda não teve coragem de sugerir?",
+            "Onde foi o lugar mais inesperado que você já teve vontade de me beijar intensamente?",
+            "O que eu uso ou faço que você acha irresistível e que te deixa sem fôlego?",
+            "Qual momento de carinho nosso você considera o mais marcante e inesquecível até hoje?",
+            "O que você mais gosta no ritmo do nosso contato quando estamos a sós?",
+            "Se você pudesse pedir uma coisa agora, sem pudores nem julgamento, o que pediria?",
+            "O que nós ainda não experimentamos na nossa intimidade que você tem muita curiosidade de viver?"
           ]
         }
       };
 
-      const ALL_CARDS = [];
-      Object.values(CATEGORIES).forEach(category => {
-        category.questions.forEach((q, idx) => {
-          ALL_CARDS.push({
-            id: `${category.id}_${idx}`,
-            question: q,
-            categoryId: category.id,
-            categoryName: category.name,
-            color: category.color,
-            isCreator: category.isCreator
+      // Monta lista de cartas do Jogo 1
+      const G1_CARDS = [];
+      let g1CardId = 1;
+      Object.values(G1_CATEGORIES).forEach(cat => {
+        cat.questions.forEach(q => {
+          G1_CARDS.push({
+            id: 'g1_' + g1CardId++,
+            categoryId: cat.id,
+            categoryName: cat.name,
+            color: cat.color,
+            isCreator: cat.isCreator,
+            question: q
           });
         });
       });
 
       /* ==========================================================================
-         2. AUDIO & HAPTICS
+         2. BASE DE DADOS: JOGO 2 ("VERDADE, CONSEQUÊNCIA & MEMÓRIAS")
+         ========================================================================== */
+      const G2_DATA = {
+        nostalgia: [
+          "Qual foi o primeiro pensamento que passou pela sua cabeça quando me viu pela primeira vez?",
+          "Qual viagem ou passeio nosso você repetiria exatamente do mesmo jeito amanhã?",
+          "Qual foi o momento exato em que você percebeu que estávamos virando algo sério?",
+          "Qual é a piada interna nossa que você mais acha graça?",
+          "Qual música sempre te faz lembrar automaticamente de nós dois?",
+          "Qual foi o encontro mais marcante que já tivemos até hoje?",
+          "Se você pudesse reviver um único dia da nossa história, qual seria?",
+          "Qual detalhe bobo da nossa primeira conversa você ainda lembra?",
+          "Quem demorou mais para admitir o que estava sentindo no início?",
+          "Qual refeição ou jantar nosso juntos foi o mais inesquecível?",
+          "Qual foi o maior perrengue que passamos juntos e que hoje rende boas risadas?",
+          "Que foto nossa juntos é a sua favorita de todos os tempos e por quê?",
+          "O que eu fazia no início do relacionamento que você achava tímido ou engraçado?",
+          "Qual presente que te dei teve o maior significado para você?",
+          "Qual hábito meu você estranhou no início, mas hoje acha fofo?",
+          "Qual foi o melhor filme ou série que assistimos agarradinhos?",
+          "Em que momento você sentiu mais orgulho de mim até hoje?",
+          "Qual foi o lugar mais inesperado onde tivemos uma conversa profunda?",
+          "O que mudou para melhor em você desde que começamos a ficar juntos?",
+          "Qual foi a primeira mensagem de texto nossa que te fez sorrir sozinho(a)?",
+          "Qual foi o apelido mais bobo ou carinhoso que já nos demos?",
+          "Qual momento de crise nós superamos juntos que mais fortaleceu nossa parceria?",
+          "Qual comida ou restaurante virou 'a nossa cara' ao longo do tempo?",
+          "Lembra de quando nos apresentamos para a família ou amigos? O que mais marcou?",
+          "Qual foi a maior loucura espontânea que fizemos sem planejar?",
+          "Que roupa minha você mais adora me ver usando desde sempre?",
+          "Qual foi o primeiro segredo bobo que você teve coragem de me contar?",
+          "O que você achou do nosso primeiro beijo logo após ele acontecer?",
+          "Qual tradição ou rotina nossa de fim de semana você não troca por nada?",
+          "Qual foi o momento em que você mais precisou do meu abraço e ele esteve lá?",
+          "Se a nossa história virasse um livro, qual seria o título do primeiro capítulo?",
+          "Qual viagem que quase deu tudo errado acabou sendo uma das melhores?",
+          "Que mania minha você pegou para si sem nem perceber?",
+          "Qual foi a conversa mais tarde da madrugada que já tivemos?",
+          "Quando você percebeu que nós dois éramos uma boa equipe?",
+          "Qual foi o elogio mais sincero que você já me ouviu falar?",
+          "Qual surpresa que um preparou para o outro foi a mais bem-sucedida?",
+          "O que nós fazíamos no primeiro ano que deveríamos voltar a fazer?",
+          "Qual foi o domingo mais preguiçoso e perfeito que passamos juntos?",
+          "O que você diria para a sua versão do passado no dia em que me conheceu?"
+        ],
+        dilemas_padrao: [
+          "Você preferiria passar uma semana sem celular ou uma semana sem beijos?",
+          "Você preferiria que só existissem filmes de terror ou filmes de comédia pastelão no mundo?",
+          "Você preferiria nunca mais comer pizza ou nunca mais sobremesa juntos?",
+          "Você preferiria acordar amanhã lendo meus pensamentos por 24h ou que eu lesse os seus?",
+          "Você preferiria trocar de corpo comigo por 48 horas ou passar 48 horas algemados?",
+          "Você preferiria viajar para uma praia deserta sem internet ou para uma metrópole lotada?",
+          "Você preferiria ter que cantar tudo o que fala por 2 horas ou falar rimando?",
+          "Você preferiria que eu escolhesse suas roupas por um mês ou suas refeições?",
+          "Você preferiria passar as férias em uma cabana na neve ou num resort all-inclusive?",
+          "Você preferiria saber sempre o que vai ganhar de presente ou sempre surpresa?",
+          "Você preferiria nunca mais dormir até tarde ou nunca mais maratonar séries até de madrugada?",
+          "Você preferiria usar pijamas combinando em público ou fazer uma dança brega no shopping?",
+          "Você preferiria cozinhar pratos gourmet todo dia ou viver de delivery?",
+          "Você preferiria reviver nosso primeiro encontro todo ano ou ter um encontro surpresa misterioso?",
+          "Você preferiria que eu ganhasse 10cm a mais de altura ou ficasse 10cm mais baixo(a)?",
+          "Você preferiria perder a voz por um dia ou narrar tudo que faço como num documentário?",
+          "Você preferiria viajar no tempo 20 anos no nosso futuro ou voltar para a infância?",
+          "Você preferiria acordar 5h da manhã todo dia juntos ou dormir sempre às 3h?",
+          "Você preferiria passar um mês assistindo só o meu gênero favorito de filme?",
+          "Você preferiria ter um mordomo particular ou um massagista exclusivo em casa?",
+          "Você preferiria adotar cinco filhotes de cachorro juntos ou dois gatos ariscos?",
+          "Você preferiria que o banho fosse sempre morno/frio ou durasse no máximo 3 minutos?",
+          "Você preferiria acampar na chuva ou ficar num quarto de hotel sem ar-condicionado?",
+          "Você preferiria que todas as nossas fotos tivessem caretas ou fossem 100% formais?",
+          "Você preferiria sempre ser o motorista das viagens ou o responsável pelo GPS e músicas?",
+          "Você preferiria falar apenas sussurrando com o parceiro por 24h ou aos gritos?",
+          "Você preferiria me dar razão na próxima discussão real ou ganhar um jantar caro?",
+          "Você preferiria passar um ano sem hambúrguer ou sem sobremesas?",
+          "Você preferiria pausar o tempo por 10 minutos por dia ou teletransporte mensal?",
+          "Você preferiria ter um closet unissex compartilhado ou dividir a mesma escova de dente em viagens?",
+          "Você preferiria competir contra mim num reality show ou formar uma dupla imbatível?",
+          "Você preferiria dançar coladinho sem música na sala ou cantar karaokê na frente de estranhos?",
+          "Você preferiria nunca mais ter sono durante o dia ou nunca mais ter dor de cabeça?",
+          "Você preferiria café na cama todos os dias ou cafuné garantido antes de dormir?",
+          "Você preferiria imitar o meu jeito de andar por uma tarde ou meu sotaque?",
+          "Você preferiria viver um apocalipse zumbi comigo ou uma aventura pirata?",
+          "Você preferiria que fôssemos vizinhos de porta antes de namorar ou morar direto juntos?",
+          "Você preferiria passar 3 dias se comunicando comigo só por mímica e bilhetes?",
+          "Você preferiria que eu escolhesse seu corte de cabelo novo ou a cor da sua próxima roupa de festa?",
+          "Você preferiria ter o dom de me fazer rir a qualquer hora ou de tirar meu cansaço com um abraço?"
+        ],
+        dilemas_picante: [
+          "Você preferiria receber uma massagem provocante com óleo ou vendar os olhos por 15 minutos?",
+          "Você preferiria um momento quente num lugar arriscado e inusitado ou uma noite inteira num hotel de luxo?",
+          "Você preferiria que eu escolhesse toda a sua roupa íntima hoje ou ficar sem nenhuma?",
+          "Você preferiria ditar todas as regras na cama hoje ou ser completamente dominado(a)?",
+          "Você preferiria 30 minutos de preliminares sem beijo na boca ou beijar intensamente sem toque íntimo?",
+          "Você preferiria sussurros ousados no seu ouvido durante um jantar público ou carícias por baixo da mesa?",
+          "Você preferiria experimentar uma fantasia secreta minha ou me fazer realizar a sua?",
+          "Você preferiria uma noite rápida e intensa agora ou uma sessão lenta de carícias mais tarde?",
+          "Você preferiria começar a brincadeira pelo banho ou terminar o dia nele?",
+          "Você preferiria que eu usasse cubos de gelo ou toques quentes e suaves na sua pele?",
+          "Você preferiria receber beijos apenas no pescoço por 10 minutos ou na parte interna das coxas?",
+          "Você preferiria mandar uma mensagem bem ousada durante o expediente ou receber uma foto provocante?",
+          "Você preferiria ficar 24h sem poder me tocar ou poder tocar somente onde eu autorizar?",
+          "Você preferiria uma sessão de massagem tântrica com pouca luz ou um jogo de perguntas com peças de roupa?",
+          "Você preferiria que o momento íntimo fosse guiado por música ambiente lenta ou pela respiração um do outro?"
+        ],
+        prendas_padrao: [
+          "Dê um beijo de cinema de 15 segundos sem rir.",
+          "Faça uma massagem de 2 minutos nos ombros ou nas costas agora.",
+          "Fale três coisas que você acha irresistíveis no outro olhando fixamente nos olhos dele.",
+          "Imite a mania mais engraçada do seu parceiro até ele adivinhar o que é.",
+          "Tire uma selfie engraçada com caretas agora mesmo para registrar o jogo.",
+          "Invente um poema improvisado de quatro versos declarando seu carinho com rimas difíceis.",
+          "Faça um cafuné caprichado enquanto o outro fecha os olhos por 1 minuto.",
+          "Dance uma música lenta imaginária no meio do quarto bem abraçados.",
+          "Deixe o parceiro mexer no seu cabelo e fazer o penteado que quiser por 3 minutos.",
+          "Faça uma declaração romântica exagerada usando a voz de um vilão de desenho animado.",
+          "Revele uma coisa fofa que você sempre quis que o parceiro fizesse mais vezes.",
+          "Dê 5 beijos estalados no rosto do outro nos lugares que ele escolher.",
+          "Abrace o parceiro e fique 30 segundos em silêncio sentindo o abraço.",
+          "Faça cócegas no parceiro até ele pedir arrego (limite de 15 segundos!).",
+          "Passe a mão no rosto do parceiro e descreva os traços que mais gosta nele.",
+          "Deixe o parceiro escolher um apelido novo e engraçado para você usar até a próxima rodada.",
+          "Pegue o celular, escolha a melhor foto do casal e coloque como plano de fundo agora.",
+          "Diga ao ouvido do parceiro uma lembrança doce que você nunca esqueceu.",
+          "Faça uma massagem capilar relaxante no parceiro com as pontas dos dedos por 1 minuto.",
+          "Dê um beijo de esquimó (esfregando o nariz) por 10 segundos sem perder a postura.",
+          "Elogie três detalhes da personalidade do outro com bastante sinceridade.",
+          "Faça o parceiro rir nos próximos 30 segundos sem encostar nele.",
+          "Permita que o parceiro faça qualquer pergunta aleatória e responda com 100% de honestidade.",
+          "Deite a cabeça no colo do parceiro e relaxe enquanto ganha carinho até a próxima rodada.",
+          "Tente adivinhar exatamente o que o parceiro comeu no almoço ou no jantar de ontem.",
+          "Imite a risada do seu parceiro da forma mais fiel possível.",
+          "Prometa uma sobremesa, doce ou café para o parceiro no próximo final de semana.",
+          "Dê uma mordidinha leve e carinhosa no ombro ou queixo do seu parceiro.",
+          "Diga em voz alta o que você mais admira no caráter e maturidade dele(a).",
+          "Faça 10 agachamentos falando uma qualidade do parceiro a cada repetição.",
+          "Desenhe um coração com a ponta dos dedos na palma da mão do parceiro.",
+          "Mande um áudio de 5 segundos no WhatsApp do parceiro dizendo o quanto ele é importante.",
+          "Faça uma mímica de um momento marcante do casal até o outro adivinhar.",
+          "Dê as mãos, olhe nos olhos e tente não piscar nem rir por 20 segundos.",
+          "Cante o refrão de uma música marcante para vocês bem baixinho.",
+          "Faça uma massagem relaxante nas mãos do parceiro com movimentos suaves.",
+          "Sirva um copo de água gelada para o parceiro com pose de garçom de restaurante fino.",
+          "Fale com um sotaque diferente até o final da próxima rodada.",
+          "Diga qual foi o momento da semana em que você mais sentiu falta do abraço dele(a).",
+          "Termine a rodada com um abraço apertado de urso que dure pelo menos 20 segundos."
+        ],
+        prendas_picante: [
+          "Dê uma mordidinha leve e provocante na orelha do parceiro sussurrando algo no ouvido.",
+          "Faça uma massagem de 2 minutos no pescoço e ombros tirando a parte de cima da roupa.",
+          "Beije lentamente o pescoço do parceiro sem encostar as mãos nele.",
+          "Tire uma peça de roupa à sua escolha ou deixe o parceiro escolher.",
+          "Vende os olhos do parceiro e passe a ponta dos dedos em 3 lugares diferentes para ele adivinhar.",
+          "Dê um beijo demorado e intenso em uma parte do corpo que o parceiro escolher.",
+          "Sussurre no ouvido dele(a) exatamente o que você tem vontade de fazer mais tarde.",
+          "Passe um cubo de gelo (ou a ponta dos dedos bem fria) nos lábios e depois no peito do parceiro.",
+          "Sente no colo do parceiro e fiquem abraçados bem colados por 1 minuto sem falar nada.",
+          "Tire a camisa do seu parceiro usando apenas uma das mãos.",
+          "Deslize os lábios pelo queixo e descendo até a clavícula do outro bem devagar.",
+          "Deixe o parceiro te dar um beijo de 20 segundos onde ele quiser.",
+          "Faça uma carícia lenta pela cintura e costas do parceiro por baixo da blusa.",
+          "Fale olho no olho qual é a sua fantasia mais secreta com ele(a).",
+          "Fique pelo restante da partida sem uma peça de roupa à escolha do outro."
+        ]
+      };
+
+      /* ==========================================================================
+         3. AUDIO & HAPTICS (SINTETIZADOR PROCEDURAL WEB AUDIO)
          ========================================================================== */
       let audioCtx = null;
       let soundEnabled = true;
 
-      function getAudioContext() {
+      function initAudio() {
         if (!audioCtx) {
-          const AudioContext = window.AudioContext || window.webkitAudioContext;
-          if (AudioContext) audioCtx = new AudioContext();
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (AudioContextClass) {
+            audioCtx = new AudioContextClass();
+          }
         }
         if (audioCtx && audioCtx.state === 'suspended') {
           audioCtx.resume();
         }
-        return audioCtx;
       }
 
       function playCardSwoosh() {
         if (!soundEnabled) return;
         try {
-          const ctx = getAudioContext();
-          if (!ctx) return;
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          const filter = ctx.createBiquadFilter();
+          initAudio();
+          if (!audioCtx) return;
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          const filter = audioCtx.createBiquadFilter();
+
+          osc.type = 'sine';
+          const now = audioCtx.currentTime;
+          osc.frequency.setValueAtTime(320, now);
+          osc.frequency.exponentialRampToValueAtTime(140, now + 0.16);
 
           filter.type = 'lowpass';
-          filter.frequency.setValueAtTime(700, ctx.currentTime);
-          filter.frequency.exponentialRampToValueAtTime(140, ctx.currentTime + 0.16);
+          filter.frequency.setValueAtTime(900, now);
 
-          osc.type = 'triangle';
-          osc.frequency.setValueAtTime(240, ctx.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(70, ctx.currentTime + 0.16);
-
-          gain.gain.setValueAtTime(0.08, ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.16);
+          gain.gain.setValueAtTime(0.001, now);
+          gain.gain.linearRampToValueAtTime(0.08, now + 0.03);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
 
           osc.connect(filter);
           filter.connect(gain);
-          gain.connect(ctx.destination);
+          gain.connect(audioCtx.destination);
 
-          osc.start();
-          osc.stop(ctx.currentTime + 0.17);
-        } catch (e) {}
+          osc.start(now);
+          osc.stop(now + 0.19);
+        } catch(e) {}
       }
 
-      function playChimeCreator() {
+      function playSpicyFireSound() {
         if (!soundEnabled) return;
         try {
-          const ctx = getAudioContext();
-          if (!ctx) return;
-          [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            const start = ctx.currentTime + idx * 0.05;
+          initAudio();
+          if (!audioCtx) return;
+          const now = audioCtx.currentTime;
+          const osc1 = audioCtx.createOscillator();
+          const osc2 = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
 
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(freq, start);
+          osc1.type = 'triangle';
+          osc2.type = 'sine';
 
-            gain.gain.setValueAtTime(0.045, start);
-            gain.gain.exponentialRampToValueAtTime(0.001, start + 0.32);
+          osc1.frequency.setValueAtTime(440, now);
+          osc1.frequency.exponentialRampToValueAtTime(880, now + 0.12);
+          osc2.frequency.setValueAtTime(660, now);
+          osc2.frequency.exponentialRampToValueAtTime(1320, now + 0.18);
 
-            osc.connect(gain);
-            gain.connect(ctx.destination);
+          gain.gain.setValueAtTime(0.001, now);
+          gain.gain.linearRampToValueAtTime(0.09, now + 0.04);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
 
-            osc.start(start);
-            osc.stop(start + 0.33);
-          });
-        } catch (e) {}
+          osc1.connect(gain);
+          osc2.connect(gain);
+          gain.connect(audioCtx.destination);
+
+          osc1.start(now);
+          osc2.start(now);
+          osc1.stop(now + 0.26);
+          osc2.stop(now + 0.26);
+        } catch(e) {}
       }
 
-      function triggerHaptic(type) {
+      function triggerHaptic(type = 'tap') {
         if (!navigator.vibrate) return;
         try {
-          if (type === 'tap') navigator.vibrate(10);
-          else if (type === 'swipe') navigator.vibrate(20);
-          else if (type === 'creator') navigator.vibrate([15, 30, 20]);
-        } catch (e) {}
+          if (type === 'tap') navigator.vibrate(12);
+          else if (type === 'next') navigator.vibrate([16, 20, 16]);
+          else if (type === 'spicy') navigator.vibrate([24, 30, 45]);
+        } catch(e) {}
       }
 
       /* ==========================================================================
-         3. SESSION STATE
+         4. ESTADO GLOBAL DA APLICAÇÃO
          ========================================================================== */
-      let currentScreen = 'HOME';
-      let selectedCategoryIds = new Set(['confianca', 'coragem', 'revelacao', 'construcao', 'cumplicidade', 'intensidade']);
-      let sessionPlayedCardIds = new Set();
-      let remainingDeck = [];
-      let currentCard = null;
-      let sessionAnsweredCount = 0;
-      let historyQuestions = [];
-      let isAnimating = false;
+      let currentScreen = 'HUB'; // 'HUB' | 'G2_SETUP' | 'G2_GAME' | 'G1_GAME'
 
-      // Pointer Drag
+      // Jogo 1 State
+      const g1SelectedCategoryIds = new Set(Object.keys(G1_CATEGORIES));
+      const g1PlayedCardIds = new Set();
+      let g1RemainingDeck = [];
+      let g1CurrentCard = null;
+
+      // Jogo 2 State
+      const g2Modes = {
+        nostalgia: true,
+        dilemas: true,
+        prendas: true,
+        spicy: false,
+        onlySpicy: false
+      };
+      const g2PlayedCardIds = new Set();
+      let g2RemainingDeck = [];
+      let g2CurrentCard = null;
+
+      // History (registra todas as jogadas de cada jogo)
+      let g1History = [];
+      let g2History = [];
+
+      // Drag Gesture State
       let isDragging = false;
       let startX = 0;
-      let startY = 0;
-      let currentX = 0;
-      let currentY = 0;
-      let dragThreshold = 75;
+      let currentDeltaX = 0;
+      let isAnimating = false;
+      let activeGameContext = 1; // 1 ou 2
 
       /* ==========================================================================
-         4. DOM ELEMENTS
+         5. DOM ELEMENTS
          ========================================================================== */
-      const viewHome = document.getElementById('view-home');
-      const viewGame = document.getElementById('view-game');
-      const homeTotalCards = document.getElementById('home-total-cards');
-      const btnStartPlaying = document.getElementById('btn-start-playing');
-      const btnHomeCustomize = document.getElementById('btn-home-customize');
-      const btnBackHome = document.getElementById('btn-back-home');
-      const btnEndToHome = document.getElementById('btn-end-to-home');
+      const screenHub = document.getElementById('view-hub');
+      const screenGame2Setup = document.getElementById('view-game2-setup');
+      const screenGame2 = document.getElementById('view-game2');
+      const screenGame1 = document.getElementById('view-game1');
 
-      const activeCard = document.getElementById('active-card');
-      const cueNext = document.getElementById('cue-next');
-      const cueSkip = document.getElementById('cue-skip');
+      // Hub Buttons
+      const cardLaunchGame1 = document.getElementById('card-launch-game1');
+      const cardLaunchGame2 = document.getElementById('card-launch-game2');
+      const btnHubSound = document.getElementById('btn-hub-sound');
 
-      const cardQuestionText = document.getElementById('card-question-text');
-      const cardCatTagText = document.getElementById('card-cat-tag-text');
-      const cardCreatorBadge = document.getElementById('card-creator-badge');
-      const hudCategoryName = document.getElementById('hud-category-name');
-      const hudCategoryDot = document.getElementById('hud-category-dot');
-      const hudProgress = document.getElementById('hud-progress');
+      // Game 2 Setup Elements
+      const btnSetupBackHub = document.getElementById('btn-setup-back-hub');
+      const btnSetupCancel = document.getElementById('btn-setup-cancel');
+      const btnSetupStart = document.getElementById('btn-setup-start');
+      const modeTilesGrid = document.getElementById('mode-tiles-grid');
+      const tileNostalgia = document.getElementById('tile-nostalgia');
+      const tileDilemas = document.getElementById('tile-dilemas');
+      const tilePrendas = document.getElementById('tile-prendas');
+      const toggleSpicyMode = document.getElementById('toggle-spicy-mode');
+      const spicyToggleCard = document.getElementById('spicy-toggle-card');
+      const toggleOnlySpicy = document.getElementById('toggle-only-spicy');
+      const onlySpicyCard = document.getElementById('only-spicy-card');
+      const setupG2StatusText = document.getElementById('setup-g2-status-text');
+      const btnG2ResetCards = document.getElementById('btn-g2-reset-cards');
+      const setupCardCount = document.getElementById('setup-card-count');
 
-      const btnNext = document.getElementById('btn-next');
-      const btnSkip = document.getElementById('btn-skip');
-      const btnOpenDeckMenu = document.getElementById('btn-open-deck-menu');
-      const btnCloseDeckModal = document.getElementById('btn-close-deck-modal');
-      const btnHistory = document.getElementById('btn-history');
-      const btnCloseHistoryModal = document.getElementById('btn-close-history-modal');
-      const btnToggleSound = document.getElementById('btn-toggle-sound');
-      const btnHomeSound = document.getElementById('btn-home-sound');
-      const btnSelectAll = document.getElementById('btn-select-all');
-      const btnClearAll = document.getElementById('btn-clear-all');
-      const btnApplyAndShuffle = document.getElementById('btn-apply-and-shuffle');
-      const btnResetSession = document.getElementById('btn-reset-session');
-      const btnRestartDeck = document.getElementById('btn-restart-deck');
+      // Game 2 Active Elements
+      const btnGame2Settings = document.getElementById('btn-game2-settings');
+      const btnGame2History = document.getElementById('btn-game2-history');
+      const btnGame2Sound = document.getElementById('btn-game2-sound');
+      const hud2CategoryName = document.getElementById('hud2-category-name');
+      const hud2Dot = document.getElementById('hud2-dot');
+      const hud2Progress = document.getElementById('hud2-progress');
+      const card2ActiveWrap = document.getElementById('card2-active-wrap');
+      const card2Active = document.getElementById('card2-active');
+      const card2Tag = document.getElementById('card2-tag');
+      const card2Icon = document.getElementById('card2-icon');
+      const card2CatTitle = document.getElementById('card2-cat-title');
+      const card2SpicyIndicator = document.getElementById('card2-spicy-indicator');
+      const card2QuestionText = document.getElementById('card2-question-text');
+      const cue2Next = document.getElementById('cue2-next');
+      const cue2Skip = document.getElementById('cue2-skip');
+      const btn2Next = document.getElementById('btn2-next');
+      const btn2Skip = document.getElementById('btn2-skip');
 
-      const modalDeck = document.getElementById('modal-deck');
-      const modalHistory = document.getElementById('modal-history');
-      const modalEnd = document.getElementById('modal-end');
-      const originalCategoriesList = document.getElementById('original-categories-list');
-      const creatorCategoriesList = document.getElementById('creator-categories-list');
+      // Game 1 Active Elements
+      const btnGame1ToHub = document.getElementById('btn-game1-to-hub');
+      const btnGame1DeckMenu = document.getElementById('btn-game1-deck-menu');
+      const btnGame1History = document.getElementById('btn-game1-history');
+      const hud1CategoryName = document.getElementById('hud1-category-name');
+      const hud1CategoryDot = document.getElementById('hud1-category-dot');
+      const hud1Progress = document.getElementById('hud1-progress');
+      const card1ActiveWrap = document.getElementById('card1-active-wrap');
+      const card1Active = document.getElementById('card1-active');
+      const card1CatTagText = document.getElementById('card1-cat-tag-text');
+      const card1CreatorBadge = document.getElementById('card1-creator-badge');
+      const card1QuestionText = document.getElementById('card1-question-text');
+      const cue1Next = document.getElementById('cue1-next');
+      const cue1Skip = document.getElementById('cue1-skip');
+      const btn1Next = document.getElementById('btn1-next');
+      const btn1Skip = document.getElementById('btn1-skip');
+
+      // Modals
+      const modalGame1Deck = document.getElementById('modal-game1-deck');
+      const btnCloseGame1Modal = document.getElementById('btn-close-game1-modal');
+      const btnG1SelectAll = document.getElementById('btn-g1-select-all');
+      const btnG1ClearAll = document.getElementById('btn-g1-clear-all');
+      const btnG1Apply = document.getElementById('btn-g1-apply');
       const toggleCreatorCategories = document.getElementById('toggle-creator-categories');
-      const deckCountTotal = document.getElementById('deck-count-total');
+      const g1OriginalCategoriesList = document.getElementById('g1-original-categories-list');
+      const g1CreatorCategoriesList = document.getElementById('g1-creator-categories-list');
+      const g1CreatorSectionWrap = document.getElementById('g1-creator-section-wrap');
+
+      const modalHistory = document.getElementById('modal-history');
+      const btnCloseHistoryModal = document.getElementById('btn-close-history-modal');
+      const btnCloseHistoryAction = document.getElementById('btn-close-history-action');
       const historyItemsContainer = document.getElementById('history-items-container');
 
+      const modalEnd = document.getElementById('modal-end');
+      const btnRestartDeck = document.getElementById('btn-restart-deck');
+      const btnEndToHub = document.getElementById('btn-end-to-hub');
+
       /* ==========================================================================
-         5. NON-REPEATING DECK BUILDER & RENDERER
+         6. NAVEGAÇÃO DE TELAS (SEM RECARREGAR PÁGINA)
          ========================================================================== */
-      function rebuildRemainingDeck(resetSession = false) {
-        if (resetSession) {
-          sessionPlayedCardIds.clear();
-          historyQuestions = [];
-          sessionAnsweredCount = 0;
+      function showScreen(screenId) {
+        currentScreen = screenId;
+        [screenHub, screenGame2Setup, screenGame2, screenGame1].forEach(s => s.classList.remove('active'));
+
+        if (screenId === 'HUB') {
+          screenHub.classList.add('active');
+          updateThemeGlow('#D4A359');
+        } else if (screenId === 'G2_SETUP') {
+          screenGame2Setup.classList.add('active');
+          updateGame2SetupCount();
+          updateThemeGlow(g2Modes.onlySpicy ? '#FF4D4D' : (g2Modes.spicy ? '#8E1629' : '#D4A359'));
+        } else if (screenId === 'G2_GAME') {
+          activeGameContext = 2;
+          screenGame2.classList.add('active');
+          if (!g2CurrentCard || g2RemainingDeck.length === 0) {
+            buildGame2Deck(false);
+          }
+          renderCurrentGame2Card();
+        } else if (screenId === 'G1_GAME') {
+          activeGameContext = 1;
+          screenGame1.classList.add('active');
+          if (!g1CurrentCard || g1RemainingDeck.length === 0) {
+            buildGame1Deck(false);
+          }
+          renderCurrentGame1Card();
         }
-
-        const eligibleCards = ALL_CARDS.filter(card => {
-          return selectedCategoryIds.has(card.categoryId) && !sessionPlayedCardIds.has(card.id);
-        });
-
-        // Fisher-Yates shuffle
-        for (let i = eligibleCards.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [eligibleCards[i], eligibleCards[j]] = [eligibleCards[j], eligibleCards[i]];
-        }
-
-        remainingDeck = eligibleCards;
       }
 
       function updateThemeGlow(color) {
         document.documentElement.style.setProperty('--active-accent', color);
         const hex = color.replace('#', '');
-        const r = parseInt(hex.substring(0, 2), 16);
-        const g = parseInt(hex.substring(2, 4), 16);
-        const b = parseInt(hex.substring(4, 6), 16);
+        const r = parseInt(hex.substring(0, 2), 16) || 212;
+        const g = parseInt(hex.substring(2, 4), 16) || 163;
+        const b = parseInt(hex.substring(4, 6), 16) || 89;
         document.documentElement.style.setProperty('--active-glow', `rgba(${r}, ${g}, ${b}, 0.25)`);
       }
 
-      function renderCurrentCard() {
-        if (remainingDeck.length === 0) {
-          currentCard = null;
+      /* ==========================================================================
+         7. LÓGICA DO JOGO 2 (VERDADE, CONSEQUÊNCIA & MEMÓRIAS)
+         ========================================================================== */
+      function getGame2EligibleCards() {
+        const pool = [];
+
+        // Modo exclusivo: Apenas Picantes (15 dilemas picantes + 15 prendas picantes = 30 cartas)
+        if (g2Modes.onlySpicy) {
+          G2_DATA.dilemas_picante.forEach((q, idx) => {
+            pool.push({
+              id: 'g2_dilema_spicy_' + idx,
+              mode: 'dilema_picante',
+              categoryName: 'Dilema Picante',
+              icon: '🔥',
+              color: '#FF4D4D',
+              isSpicy: true,
+              question: q
+            });
+          });
+          G2_DATA.prendas_picante.forEach((q, idx) => {
+            pool.push({
+              id: 'g2_prenda_spicy_' + idx,
+              mode: 'prenda_picante',
+              categoryName: 'Prenda Picante',
+              icon: '🔥',
+              color: '#FF4D4D',
+              isSpicy: true,
+              question: q
+            });
+          });
+          return pool;
+        }
+
+        if (g2Modes.nostalgia) {
+          G2_DATA.nostalgia.forEach((q, idx) => {
+            pool.push({
+              id: 'g2_nostalgia_' + idx,
+              mode: 'nostalgia',
+              categoryName: 'Nostalgia',
+              icon: '🕰️',
+              color: '#D4A359',
+              isSpicy: false,
+              question: q
+            });
+          });
+        }
+
+        if (g2Modes.dilemas) {
+          G2_DATA.dilemas_padrao.forEach((q, idx) => {
+            pool.push({
+              id: 'g2_dilema_' + idx,
+              mode: 'dilema',
+              categoryName: 'Dilema',
+              icon: '🤔',
+              color: '#2E6F89',
+              isSpicy: false,
+              question: q
+            });
+          });
+          if (g2Modes.spicy) {
+            G2_DATA.dilemas_picante.forEach((q, idx) => {
+              pool.push({
+                id: 'g2_dilema_spicy_' + idx,
+                mode: 'dilema_picante',
+                categoryName: 'Dilema Picante',
+                icon: '🔥',
+                color: '#FF4D4D',
+                isSpicy: true,
+                question: q
+              });
+            });
+          }
+        }
+
+        if (g2Modes.prendas) {
+          G2_DATA.prendas_padrao.forEach((q, idx) => {
+            pool.push({
+              id: 'g2_prenda_' + idx,
+              mode: 'prenda',
+              categoryName: 'Prenda',
+              icon: '🎯',
+              color: '#4E8569',
+              isSpicy: false,
+              question: q
+            });
+          });
+          if (g2Modes.spicy) {
+            G2_DATA.prendas_picante.forEach((q, idx) => {
+              pool.push({
+                id: 'g2_prenda_spicy_' + idx,
+                mode: 'prenda_picante',
+                categoryName: 'Prenda Picante',
+                icon: '🔥',
+                color: '#FF4D4D',
+                isSpicy: true,
+                question: q
+              });
+            });
+          }
+        }
+
+        return pool;
+      }
+
+      function updateGame2SetupCount() {
+        const eligible = getGame2EligibleCards();
+        const playedCount = g2PlayedCardIds.size;
+
+        if (g2Modes.onlySpicy) {
+          setupCardCount.textContent = `${eligible.length} cartas 100% picantes`;
+        } else {
+          setupCardCount.textContent = `${eligible.length} cartas prontas`;
+        }
+
+        if (playedCount > 0) {
+          setupG2StatusText.textContent = `${playedCount} ${playedCount === 1 ? 'carta jogada' : 'cartas jogadas'} nesta sessão`;
+        } else {
+          setupG2StatusText.textContent = 'Nenhuma carta jogada ainda';
+        }
+
+        btnSetupStart.disabled = eligible.length === 0;
+        btnSetupStart.style.opacity = eligible.length === 0 ? '0.5' : '1';
+      }
+
+      function buildGame2Deck(resetSession = false) {
+        if (resetSession) {
+          g2PlayedCardIds.clear();
+          g2History = [];
+        }
+
+        const eligible = getGame2EligibleCards().filter(c => !g2PlayedCardIds.has(c.id));
+
+        // Fisher-Yates shuffle
+        for (let i = eligible.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [eligible[i], eligible[j]] = [eligible[j], eligible[i]];
+        }
+
+        g2RemainingDeck = eligible;
+      }
+
+      function renderCurrentGame2Card() {
+        if (g2RemainingDeck.length === 0) {
+          g2CurrentCard = null;
           openModal(modalEnd);
           return;
         }
 
-        currentCard = remainingDeck[0];
-        updateThemeGlow(currentCard.color);
+        g2CurrentCard = g2RemainingDeck[0];
+        updateThemeGlow(g2CurrentCard.color);
 
-        cardCatTagText.textContent = currentCard.categoryName;
-        cardQuestionText.textContent = currentCard.question;
+        hud2CategoryName.textContent = g2CurrentCard.categoryName;
+        hud2Progress.textContent = `${g2RemainingDeck.length} ${g2RemainingDeck.length === 1 ? 'carta restante' : 'cartas restantes'}`;
+        hud2Dot.style.backgroundColor = g2CurrentCard.color;
+        hud2Dot.style.boxShadow = `0 0 10px ${g2CurrentCard.color}`;
 
-        if (currentCard.isCreator) {
-          cardCreatorBadge.style.display = 'inline-flex';
-          activeCard.classList.add('special-glow');
-          playChimeCreator();
-          triggerHaptic('creator');
+        card2Icon.textContent = g2CurrentCard.icon;
+        card2CatTitle.textContent = g2CurrentCard.categoryName;
+        card2Tag.style.color = g2CurrentCard.color;
+        card2QuestionText.textContent = g2CurrentCard.question;
+
+        if (g2CurrentCard.isSpicy) {
+          card2SpicyIndicator.style.display = 'inline-flex';
+          playSpicyFireSound();
+          triggerHaptic('spicy');
         } else {
-          cardCreatorBadge.style.display = 'none';
-          activeCard.classList.remove('special-glow');
+          card2SpicyIndicator.style.display = 'none';
         }
-
-        hudCategoryName.textContent = currentCard.categoryName;
-        hudProgress.textContent = `${remainingDeck.length} ${remainingDeck.length === 1 ? 'carta restante' : 'cartas restantes'}`;
       }
 
-      function nextCard(direction = 'left') {
+      function nextGame2Card(direction = 'left') {
         if (isAnimating) return;
-        if (!currentCard || remainingDeck.length === 0) {
+        if (!g2CurrentCard || g2RemainingDeck.length === 0) {
           openModal(modalEnd);
           return;
         }
 
         isAnimating = true;
         playCardSwoosh();
-        triggerHaptic('swipe');
+        triggerHaptic('next');
 
-        sessionPlayedCardIds.add(currentCard.id);
-        sessionAnsweredCount++;
+        if (direction === 'left') {
+          // Respondeu / Concluiu
+          g2PlayedCardIds.add(g2CurrentCard.id);
+          g2History.unshift({
+            sessionIndex: g2History.length + 1,
+            categoryName: g2CurrentCard.categoryName,
+            color: g2CurrentCard.color,
+            question: g2CurrentCard.question
+          });
+        }
 
-        historyQuestions.unshift({
-          ...currentCard,
-          sessionIndex: sessionAnsweredCount
-        });
-
-        remainingDeck.shift();
-
-        // Slide out smoothly in swipe direction
-        const exitClass = direction === 'right' ? 'exit-right' : 'exit-left';
-        activeCard.classList.add(exitClass);
+        const exitClass = direction === 'left' ? 'exit-left' : 'exit-right';
+        card2ActiveWrap.classList.add(exitClass);
 
         setTimeout(() => {
-          activeCard.classList.remove('exit-left', 'exit-right');
-          activeCard.style.transform = '';
+          g2RemainingDeck.shift();
+          card2ActiveWrap.classList.remove(exitClass, 'enter-spring');
+          card2ActiveWrap.style.transform = '';
+          card2ActiveWrap.style.opacity = '';
 
-          renderCurrentCard();
+          renderCurrentGame2Card();
 
-          activeCard.classList.add('enter-spring');
-          setTimeout(() => {
-            activeCard.classList.remove('enter-spring');
-            isAnimating = false;
-          }, 420);
-        }, 300);
+          void card2ActiveWrap.offsetWidth; // re-trigger reflow
+          card2ActiveWrap.classList.add('enter-spring');
+          isAnimating = false;
+        }, 290);
       }
 
       /* ==========================================================================
-         6. TOUCH & POINTER GESTURES WITH SUBTLE TEXT CUE HIGHLIGHT
+         8. LÓGICA DO JOGO 1 ("ISSO NÃO É SÓ SOBRE NÓS")
          ========================================================================== */
-      function onPointerDown(e) {
-        if (isAnimating || !currentCard) return;
-        isDragging = true;
-        startX = e.clientX;
-        startY = e.clientY;
-        currentX = e.clientX;
-        currentY = e.clientY;
-        activeCard.classList.add('dragging');
-      }
-
-      function onPointerMove(e) {
-        if (!isDragging) return;
-        currentX = e.clientX;
-        currentY = e.clientY;
-
-        const deltaX = currentX - startX;
-        const deltaY = currentY - startY;
-        const rot = deltaX * 0.05;
-
-        activeCard.style.transform = `translate3d(${deltaX}px, ${deltaY * 0.26}px, 0) rotate(${rot}deg)`;
-
-        // Acende suavemente as escritas na parte inferior da carta
-        if (deltaX < -15) {
-          cueNext.classList.add('lit');
-          cueSkip.classList.remove('lit');
-        } else if (deltaX > 15) {
-          cueSkip.classList.add('lit');
-          cueNext.classList.remove('lit');
-        } else {
-          cueNext.classList.remove('lit');
-          cueSkip.classList.remove('lit');
+      function buildGame1Deck(resetSession = false) {
+        if (resetSession) {
+          g1PlayedCardIds.clear();
+          g1History = [];
         }
+
+        const eligible = G1_CARDS.filter(c => g1SelectedCategoryIds.has(c.categoryId) && !g1PlayedCardIds.has(c.id));
+
+        for (let i = eligible.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [eligible[i], eligible[j]] = [eligible[j], eligible[i]];
+        }
+
+        g1RemainingDeck = eligible;
       }
 
-      function onPointerUp(e) {
-        if (!isDragging) return;
-        isDragging = false;
-        activeCard.classList.remove('dragging');
-
-        cueNext.classList.remove('lit');
-        cueSkip.classList.remove('lit');
-
-        const deltaX = currentX - startX;
-        const deltaY = currentY - startY;
-        const dist = Math.hypot(deltaX, deltaY);
-
-        if (dist < 8) {
-          // Toque rápido na carta avança para a próxima
-          nextCard('left');
+      function renderCurrentGame1Card() {
+        if (g1RemainingDeck.length === 0) {
+          g1CurrentCard = null;
+          openModal(modalEnd);
           return;
         }
 
-        if (Math.abs(deltaX) > dragThreshold) {
-          const dir = deltaX > 0 ? 'right' : 'left';
-          nextCard(dir);
+        g1CurrentCard = g1RemainingDeck[0];
+        updateThemeGlow(g1CurrentCard.color);
+
+        hud1CategoryName.textContent = g1CurrentCard.categoryName;
+        hud1Progress.textContent = `${g1RemainingDeck.length} ${g1RemainingDeck.length === 1 ? 'carta restante' : 'cartas restantes'}`;
+        hud1CategoryDot.style.backgroundColor = g1CurrentCard.color;
+        hud1CategoryDot.style.boxShadow = `0 0 10px ${g1CurrentCard.color}`;
+
+        card1CatTagText.textContent = g1CurrentCard.categoryName;
+        card1QuestionText.textContent = g1CurrentCard.question;
+
+        if (g1CurrentCard.isCreator) {
+          card1CreatorBadge.style.display = 'inline-flex';
+          card1Active.style.borderColor = g1CurrentCard.color;
+          triggerHaptic('spicy');
         } else {
-          activeCard.style.transition = 'transform 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-          activeCard.style.transform = '';
-          setTimeout(() => {
-            activeCard.style.transition = '';
-          }, 290);
+          card1CreatorBadge.style.display = 'none';
+          card1Active.style.borderColor = 'var(--border-subtle)';
         }
+      }
+
+      function nextGame1Card(direction = 'left') {
+        if (isAnimating) return;
+        if (!g1CurrentCard || g1RemainingDeck.length === 0) {
+          openModal(modalEnd);
+          return;
+        }
+
+        isAnimating = true;
+        playCardSwoosh();
+        triggerHaptic('next');
+
+        if (direction === 'left') {
+          g1PlayedCardIds.add(g1CurrentCard.id);
+          g1History.unshift({
+            sessionIndex: g1History.length + 1,
+            categoryName: g1CurrentCard.categoryName,
+            color: g1CurrentCard.color,
+            question: g1CurrentCard.question
+          });
+        }
+
+        const exitClass = direction === 'left' ? 'exit-left' : 'exit-right';
+        card1ActiveWrap.classList.add(exitClass);
+
+        setTimeout(() => {
+          g1RemainingDeck.shift();
+          card1ActiveWrap.classList.remove(exitClass, 'enter-spring');
+          card1ActiveWrap.style.transform = '';
+          card1ActiveWrap.style.opacity = '';
+
+          renderCurrentGame1Card();
+
+          void card1ActiveWrap.offsetWidth;
+          card1ActiveWrap.classList.add('enter-spring');
+          isAnimating = false;
+        }, 290);
       }
 
       /* ==========================================================================
-         7. NAVIGATION & MODALS
+         9. GESTOS DE TOUCH & ARRASTAR (SWIPE CARD)
          ========================================================================== */
-      function showScreen(screen) {
-        currentScreen = screen;
-        if (screen === 'HOME') {
-          viewGame.classList.remove('active');
-          viewHome.classList.add('active');
-          updateThemeGlow('#D4A359');
-          updateHomeCounter();
-        } else {
-          viewHome.classList.remove('active');
-          viewGame.classList.add('active');
-          if (remainingDeck.length === 0) {
-            rebuildRemainingDeck(false);
-          }
-          renderCurrentCard();
-        }
-      }
+      function setupCardGestures(wrapEl, cueNextEl, cueSkipEl, nextFn) {
+        let isPointerDown = false;
+        let startPointX = 0;
+        let diffX = 0;
 
-      function openModal(modal) {
-        modal.classList.add('open');
-      }
+        wrapEl.addEventListener('pointerdown', (e) => {
+          if (isAnimating) return;
+          isPointerDown = true;
+          startPointX = e.clientX;
+          diffX = 0;
+          wrapEl.style.transition = 'none';
+        });
 
-      function closeModal(modal) {
-        modal.classList.remove('open');
-      }
+        window.addEventListener('pointermove', (e) => {
+          if (!isPointerDown || isAnimating) return;
+          diffX = e.clientX - startPointX;
+          const rotation = diffX * 0.05;
+          wrapEl.style.transform = `translateX(${diffX}px) rotate(${rotation}deg)`;
 
-      function updateHomeCounter() {
-        const count = ALL_CARDS.filter(c => selectedCategoryIds.has(c.categoryId) && !sessionPlayedCardIds.has(c.id)).length;
-        homeTotalCards.textContent = count;
-      }
-
-      function updateCategoryCardSelectionUI() {
-        document.querySelectorAll('.category-card').forEach(cardEl => {
-          const id = cardEl.dataset.catId;
-          const isSel = selectedCategoryIds.has(id);
-          const check = cardEl.querySelector('.cat-checkbox');
-
-          if (isSel) {
-            cardEl.classList.add('selected');
-            if (check) check.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>`;
+          if (diffX < -35) {
+            cueNextEl.classList.add('lit');
+            cueSkipEl.classList.remove('lit');
+          } else if (diffX > 35) {
+            cueSkipEl.classList.add('lit');
+            cueNextEl.classList.remove('lit');
           } else {
-            cardEl.classList.remove('selected');
-            if (check) check.innerHTML = '';
+            cueNextEl.classList.remove('lit');
+            cueSkipEl.classList.remove('lit');
           }
         });
 
-        const remainingCount = ALL_CARDS.filter(c => selectedCategoryIds.has(c.categoryId) && !sessionPlayedCardIds.has(c.id)).length;
-        deckCountTotal.textContent = remainingCount;
-        updateHomeCounter();
+        const handlePointerEnd = () => {
+          if (!isPointerDown) return;
+          isPointerDown = false;
+          cueNextEl.classList.remove('lit');
+          cueSkipEl.classList.remove('lit');
 
-        const creatorIds = ['cumplicidade', 'intensidade'];
-        const anyCreator = creatorIds.some(id => selectedCategoryIds.has(id));
-        toggleCreatorCategories.checked = anyCreator;
+          if (diffX < -80) {
+            nextFn('left');
+          } else if (diffX > 80) {
+            nextFn('right');
+          } else {
+            wrapEl.style.transition = 'transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1)';
+            wrapEl.style.transform = '';
+          }
+        };
+
+        window.addEventListener('pointerup', handlePointerEnd);
+        window.addEventListener('pointercancel', handlePointerEnd);
       }
 
-      function createCategoryRow(cat) {
-        const row = document.createElement('div');
-        row.className = 'category-card';
-        row.dataset.catId = cat.id;
-        row.style.setProperty('--cat-color', cat.color);
+      setupCardGestures(card2ActiveWrap, cue2Next, cue2Skip, nextGame2Card);
+      setupCardGestures(card1ActiveWrap, cue1Next, cue1Skip, nextGame1Card);
 
-        row.innerHTML = `
-          <div class="cat-info">
-            <span class="cat-badge-dot"></span>
-            <div class="cat-text">
-              <div class="cat-name">${cat.name}</div>
-              <div class="cat-count">${cat.questions.length} perguntas</div>
-            </div>
-          </div>
-          <div class="cat-checkbox"></div>
-        `;
-
-        row.addEventListener('click', () => {
-          if (selectedCategoryIds.has(cat.id)) {
-            if (selectedCategoryIds.size > 1) {
-              selectedCategoryIds.delete(cat.id);
-            }
-          } else {
-            selectedCategoryIds.add(cat.id);
-          }
-          triggerHaptic('tap');
-          updateCategoryCardSelectionUI();
-        });
-
-        return row;
+      /* ==========================================================================
+         10. GESTÃO DE MODAIS
+         ========================================================================== */
+      function openModal(modalEl) {
+        modalEl.classList.add('open');
       }
 
-      function populateCategoryLists() {
-        originalCategoriesList.innerHTML = '';
-        creatorCategoriesList.innerHTML = '';
-
-        Object.values(CATEGORIES).forEach(cat => {
-          const el = createCategoryRow(cat);
-          if (cat.isCreator) {
-            creatorCategoriesList.appendChild(el);
-          } else {
-            originalCategoriesList.appendChild(el);
-          }
-        });
-
-        updateCategoryCardSelectionUI();
+      function closeModal(modalEl) {
+        modalEl.classList.remove('open');
       }
 
       function renderHistoryList() {
+        const history = activeGameContext === 1 ? g1History : g2History;
         historyItemsContainer.innerHTML = '';
-        if (historyQuestions.length === 0) {
+
+        if (history.length === 0) {
           historyItemsContainer.innerHTML = `
-            <p style="text-align: center; color: var(--text-muted); padding: 26px 8px; font-size: 0.88rem;">
-              Nenhuma pergunta respondida ainda nesta sessão. Conforme avançarem, elas ficarão registradas aqui para revisitar a qualquer momento.
+            <p style="text-align: center; color: var(--text-muted); padding: 28px 8px; font-size: 0.88rem;">
+              Nenhuma pergunta respondida ainda nesta sessão. Conforme avançarem, elas ficarão salvas aqui para relembrar.
             </p>
           `;
           return;
         }
 
-        historyQuestions.forEach(item => {
+        history.forEach(item => {
           const div = document.createElement('div');
           div.className = 'history-card-item';
           div.innerHTML = `
@@ -2029,7 +2941,90 @@
         });
       }
 
-      function toggleSound() {
+      /* ==========================================================================
+         11. POPULAR E CONFIGURAR CATEGORIAS DO JOGO 1
+         ========================================================================== */
+      function populateGame1ModalCategories() {
+        g1OriginalCategoriesList.innerHTML = '';
+        g1CreatorCategoriesList.innerHTML = '';
+
+        Object.values(G1_CATEGORIES).forEach(cat => {
+          const card = document.createElement('div');
+          card.className = 'category-card';
+          card.style.setProperty('--card-cat-color', cat.color);
+          if (g1SelectedCategoryIds.has(cat.id)) card.classList.add('selected');
+
+          card.innerHTML = `
+            <div class="category-card-info">
+              <span class="category-card-color"></span>
+              <div>
+                <div class="category-card-name">${cat.name}</div>
+                <div class="category-card-count">${cat.questions.length} cartas</div>
+              </div>
+            </div>
+            <div class="category-card-check">✓</div>
+          `;
+
+          card.addEventListener('click', () => {
+            if (g1SelectedCategoryIds.has(cat.id)) {
+              if (g1SelectedCategoryIds.size > 1) {
+                g1SelectedCategoryIds.delete(cat.id);
+                card.classList.remove('selected');
+              }
+            } else {
+              g1SelectedCategoryIds.add(cat.id);
+              card.classList.add('selected');
+            }
+            triggerHaptic('tap');
+          });
+
+          if (cat.isCreator) {
+            g1CreatorCategoriesList.appendChild(card);
+          } else {
+            g1OriginalCategoriesList.appendChild(card);
+          }
+        });
+      }
+
+      toggleCreatorCategories.addEventListener('change', (e) => {
+        const checked = e.target.checked;
+        g1CreatorSectionWrap.style.display = checked ? 'block' : 'none';
+        ['cumplicidade', 'intensidade'].forEach(id => {
+          if (checked) g1SelectedCategoryIds.add(id);
+          else g1SelectedCategoryIds.delete(id);
+        });
+        populateGame1ModalCategories();
+        triggerHaptic('tap');
+      });
+
+      btnG1SelectAll.addEventListener('click', () => {
+        Object.keys(G1_CATEGORIES).forEach(id => {
+          if (!G1_CATEGORIES[id].isCreator || toggleCreatorCategories.checked) {
+            g1SelectedCategoryIds.add(id);
+          }
+        });
+        populateGame1ModalCategories();
+        triggerHaptic('tap');
+      });
+
+      btnG1ClearAll.addEventListener('click', () => {
+        g1SelectedCategoryIds.clear();
+        g1SelectedCategoryIds.add('confianca'); // mantém ao menos uma
+        populateGame1ModalCategories();
+        triggerHaptic('tap');
+      });
+
+      btnG1Apply.addEventListener('click', () => {
+        buildGame1Deck(false);
+        renderCurrentGame1Card();
+        closeModal(modalGame1Deck);
+        triggerHaptic('tap');
+      });
+
+      /* ==========================================================================
+         12. EVENT LISTENERS E ATALHOS
+         ========================================================================== */
+      function toggleSoundGlobal() {
         soundEnabled = !soundEnabled;
         document.querySelectorAll('.icon-sound-on').forEach(el => {
           el.style.display = soundEnabled ? 'block' : 'none';
@@ -2041,156 +3036,204 @@
         triggerHaptic('tap');
       }
 
-      /* ==========================================================================
-         8. EVENT LISTENERS
-         ========================================================================== */
-      function setupEvents() {
-        // Drag gestures on the card
-        activeCard.addEventListener('pointerdown', onPointerDown);
-        window.addEventListener('pointermove', onPointerMove);
-        window.addEventListener('pointerup', onPointerUp);
-        window.addEventListener('pointercancel', onPointerUp);
+      btnHubSound.addEventListener('click', toggleSoundGlobal);
+      btnGame2Sound.addEventListener('click', toggleSoundGlobal);
 
-        // Control buttons
-        btnNext.addEventListener('click', () => nextCard('left'));
-        btnSkip.addEventListener('click', () => nextCard('right'));
+      // Launch Game 1
+      cardLaunchGame1.addEventListener('click', () => {
+        triggerHaptic('tap');
+        showScreen('G1_GAME');
+      });
 
-        // Home Actions
-        btnStartPlaying.addEventListener('click', () => {
+      // Launch Game 2 Setup
+      cardLaunchGame2.addEventListener('click', () => {
+        triggerHaptic('tap');
+        showScreen('G2_SETUP');
+      });
+
+      // Setup Game 2 Toggles
+      tileNostalgia.addEventListener('click', () => {
+        g2Modes.nostalgia = !g2Modes.nostalgia;
+        tileNostalgia.classList.toggle('selected', g2Modes.nostalgia);
+        updateGame2SetupCount();
+        triggerHaptic('tap');
+      });
+
+      tileDilemas.addEventListener('click', () => {
+        g2Modes.dilemas = !g2Modes.dilemas;
+        tileDilemas.classList.toggle('selected', g2Modes.dilemas);
+        updateGame2SetupCount();
+        triggerHaptic('tap');
+      });
+
+      tilePrendas.addEventListener('click', () => {
+        g2Modes.prendas = !g2Modes.prendas;
+        tilePrendas.classList.toggle('selected', g2Modes.prendas);
+        updateGame2SetupCount();
+        triggerHaptic('tap');
+      });
+
+      toggleSpicyMode.addEventListener('change', (e) => {
+        g2Modes.spicy = e.target.checked;
+        if (!g2Modes.spicy && g2Modes.onlySpicy) {
+          g2Modes.onlySpicy = false;
+          toggleOnlySpicy.checked = false;
+          onlySpicyCard.classList.remove('active');
+          if (modeTilesGrid) modeTilesGrid.classList.remove('dimmed-by-spicy');
+        }
+        spicyToggleCard.classList.toggle('active', g2Modes.spicy);
+        updateGame2SetupCount();
+        if (g2Modes.spicy) {
+          updateThemeGlow(g2Modes.onlySpicy ? '#FF4D4D' : '#8E1629');
+          playSpicyFireSound();
+          triggerHaptic('spicy');
+        } else {
+          updateThemeGlow('#D4A359');
+        }
+      });
+
+      toggleOnlySpicy.addEventListener('change', (e) => {
+        g2Modes.onlySpicy = e.target.checked;
+        onlySpicyCard.classList.toggle('active', g2Modes.onlySpicy);
+        if (modeTilesGrid) modeTilesGrid.classList.toggle('dimmed-by-spicy', g2Modes.onlySpicy);
+
+        if (g2Modes.onlySpicy) {
+          g2Modes.spicy = true;
+          toggleSpicyMode.checked = true;
+          spicyToggleCard.classList.add('active');
+          updateThemeGlow('#FF4D4D');
+          playSpicyFireSound();
+          triggerHaptic('spicy');
+        } else {
+          updateThemeGlow(g2Modes.spicy ? '#8E1629' : '#D4A359');
           triggerHaptic('tap');
-          rebuildRemainingDeck(false);
-          showScreen('GAME');
+        }
+        updateGame2SetupCount();
+      });
+
+      btnG2ResetCards.addEventListener('click', () => {
+        g2PlayedCardIds.clear();
+        g2History = [];
+        buildGame2Deck(false);
+        setupG2StatusText.textContent = '✓ Todas as cartas foram reiniciadas!';
+        updateGame2SetupCount();
+        triggerHaptic('tap');
+        playCardSwoosh();
+        setTimeout(() => {
+          updateGame2SetupCount();
+        }, 1800);
+      });
+
+      btnSetupBackHub.addEventListener('click', () => {
+        triggerHaptic('tap');
+        showScreen('HUB');
+      });
+
+      btnSetupCancel.addEventListener('click', () => {
+        triggerHaptic('tap');
+        showScreen('HUB');
+      });
+
+      btnSetupStart.addEventListener('click', () => {
+        triggerHaptic('tap');
+        buildGame2Deck(false);
+        showScreen('G2_GAME');
+      });
+
+      // Game 2 In-Game Actions
+      btn2Next.addEventListener('click', () => nextGame2Card('left'));
+      btn2Skip.addEventListener('click', () => nextGame2Card('right'));
+      btnGame2Settings.addEventListener('click', () => {
+        triggerHaptic('tap');
+        showScreen('G2_SETUP');
+      });
+      btnGame2History.addEventListener('click', () => {
+        triggerHaptic('tap');
+        renderHistoryList();
+        openModal(modalHistory);
+      });
+
+      // Game 1 In-Game Actions
+      btn1Next.addEventListener('click', () => nextGame1Card('left'));
+      btn1Skip.addEventListener('click', () => nextGame1Card('right'));
+      btnGame1ToHub.addEventListener('click', () => {
+        triggerHaptic('tap');
+        showScreen('HUB');
+      });
+      btnGame1DeckMenu.addEventListener('click', () => {
+        triggerHaptic('tap');
+        populateGame1ModalCategories();
+        openModal(modalGame1Deck);
+      });
+      btnGame1History.addEventListener('click', () => {
+        triggerHaptic('tap');
+        renderHistoryList();
+        openModal(modalHistory);
+      });
+
+      // Close Modals
+      btnCloseGame1Modal.addEventListener('click', () => closeModal(modalGame1Deck));
+      btnCloseHistoryModal.addEventListener('click', () => closeModal(modalHistory));
+      btnCloseHistoryAction.addEventListener('click', () => closeModal(modalHistory));
+
+      [modalGame1Deck, modalHistory, modalEnd].forEach(modal => {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeModal(modal);
         });
+      });
 
-        btnHomeCustomize.addEventListener('click', () => {
-          triggerHaptic('tap');
-          openModal(modalDeck);
-        });
+      // End of Deck Actions
+      btnRestartDeck.addEventListener('click', () => {
+        closeModal(modalEnd);
+        if (activeGameContext === 1) {
+          buildGame1Deck(true);
+          renderCurrentGame1Card();
+        } else {
+          buildGame2Deck(true);
+          renderCurrentGame2Card();
+        }
+        triggerHaptic('tap');
+      });
 
-        btnBackHome.addEventListener('click', () => {
-          triggerHaptic('tap');
-          showScreen('HOME');
-        });
+      btnEndToHub.addEventListener('click', () => {
+        closeModal(modalEnd);
+        showScreen('HUB');
+        triggerHaptic('tap');
+      });
 
-        btnEndToHome.addEventListener('click', () => {
-          closeModal(modalEnd);
-          showScreen('HOME');
-        });
-
-        // Modals
-        btnOpenDeckMenu.addEventListener('click', () => {
-          triggerHaptic('tap');
-          openModal(modalDeck);
-        });
-
-        btnCloseDeckModal.addEventListener('click', () => closeModal(modalDeck));
-
-        btnHistory.addEventListener('click', () => {
-          triggerHaptic('tap');
-          renderHistoryList();
-          openModal(modalHistory);
-        });
-
-        btnCloseHistoryModal.addEventListener('click', () => closeModal(modalHistory));
-
-        [modalDeck, modalHistory, modalEnd].forEach(modal => {
-          modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal(modal);
-          });
-        });
-
-        btnToggleSound.addEventListener('click', toggleSound);
-        btnHomeSound.addEventListener('click', toggleSound);
-
-        btnSelectAll.addEventListener('click', () => {
-          Object.keys(CATEGORIES).forEach(id => selectedCategoryIds.add(id));
-          triggerHaptic('tap');
-          updateCategoryCardSelectionUI();
-        });
-
-        btnClearAll.addEventListener('click', () => {
-          selectedCategoryIds.clear();
-          selectedCategoryIds.add('confianca');
-          triggerHaptic('tap');
-          updateCategoryCardSelectionUI();
-        });
-
-        toggleCreatorCategories.addEventListener('change', (e) => {
-          const creatorIds = ['cumplicidade', 'intensidade'];
-          if (e.target.checked) {
-            creatorIds.forEach(id => selectedCategoryIds.add(id));
-          } else {
-            creatorIds.forEach(id => selectedCategoryIds.delete(id));
-            if (selectedCategoryIds.size === 0) selectedCategoryIds.add('confianca');
+      // Keyboard Shortcuts on Desktop
+      window.addEventListener('keydown', (e) => {
+        if (modalGame1Deck.classList.contains('open') || modalHistory.classList.contains('open') || modalEnd.classList.contains('open')) {
+          if (e.key === 'Escape') {
+            closeModal(modalGame1Deck);
+            closeModal(modalHistory);
+            closeModal(modalEnd);
           }
-          triggerHaptic('tap');
-          updateCategoryCardSelectionUI();
-        });
+          return;
+        }
 
-        btnApplyAndShuffle.addEventListener('click', () => {
-          triggerHaptic('tap');
-          closeModal(modalDeck);
-          rebuildRemainingDeck(false);
-          if (currentScreen === 'GAME') {
-            renderCurrentCard();
+        if (currentScreen === 'G2_GAME') {
+          if (e.code === 'Space' || e.key === 'ArrowLeft') {
+            e.preventDefault();
+            nextGame2Card('left');
+          } else if (e.key === 'ArrowRight' || e.key.toLowerCase() === 'p') {
+            e.preventDefault();
+            nextGame2Card('right');
           }
-        });
-
-        btnResetSession.addEventListener('click', () => {
-          if (confirm("Deseja realmente reiniciar o baralho da sessão? Todas as cartas anteriores voltarão a aparecer.")) {
-            triggerHaptic('tap');
-            rebuildRemainingDeck(true);
-            updateCategoryCardSelectionUI();
-            if (currentScreen === 'GAME') {
-              renderCurrentCard();
-            }
-            closeModal(modalDeck);
+        } else if (currentScreen === 'G1_GAME') {
+          if (e.code === 'Space' || e.key === 'ArrowLeft') {
+            e.preventDefault();
+            nextGame1Card('left');
+          } else if (e.key === 'ArrowRight' || e.key.toLowerCase() === 'p') {
+            e.preventDefault();
+            nextGame1Card('right');
           }
-        });
+        }
+      });
 
-        btnRestartDeck.addEventListener('click', () => {
-          closeModal(modalEnd);
-          rebuildRemainingDeck(true);
-          renderCurrentCard();
-        });
-
-        window.addEventListener('keydown', (e) => {
-          if (modalDeck.classList.contains('open') || modalHistory.classList.contains('open') || modalEnd.classList.contains('open')) {
-            if (e.key === 'Escape') {
-              closeModal(modalDeck);
-              closeModal(modalHistory);
-              closeModal(modalEnd);
-            }
-            return;
-          }
-
-          if (currentScreen === 'GAME') {
-            if (e.code === 'Space' || e.key === 'ArrowRight' || e.key === 'Enter') {
-              e.preventDefault();
-              nextCard('left');
-            } else if (e.key === 'ArrowLeft') {
-              e.preventDefault();
-              nextCard('right');
-            }
-          }
-        });
-      }
-
-      /* ==========================================================================
-         9. INITIALIZATION
-         ========================================================================== */
-      function init() {
-        populateCategoryLists();
-        rebuildRemainingDeck(false);
-        setupEvents();
-        showScreen('HOME');
-      }
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-      } else {
-        init();
-      }
+      // Inicialização
+      populateGame1ModalCategories();
+      updateGame2SetupCount();
     })();
   </script>
 </body>
